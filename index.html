@@ -1,0 +1,4007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Strict referrer policy required for reliable YouTube trailer embeds (prevents Error 153) -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title>Would Watch That — Curated Cinema, TV & Reality Discovery</title>
+  <meta name="description" content="Discover Movies, TV Series, Reality Shows, Miniseries, Docuseries, and Talk/Variety shows with precision multi-criteria filters, 30+ moods & tropes, and an immersive screening-room atmosphere." />
+
+  <!-- Inline Data-URI Art Deco SVG Favicon featuring W · W · T -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230F172A'/%3E%3Crect x='4' y='4' width='56' height='56' rx='10' fill='none' stroke='%23D4AF37' stroke-width='2.5'/%3E%3Cpolygon points='32,8 56,32 32,56 8,32' fill='none' stroke='%23D4AF37' stroke-width='1.2' opacity='0.55'/%3E%3Ctext x='32' y='37' text-anchor='middle' font-family='Georgia, serif' font-weight='bold' font-size='14' letter-spacing='1.5' fill='%23D4AF37'%3EW%C2%B7W%C2%B7T%3C/text%3E%3C/svg%3E" />
+
+  <!-- Classic & Editorial Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS: 4 THEMES, 12 ACCENT COLOURS, 4 FONT PAIRINGS & 3 LAYOUTS
+       ========================================================================== */
+    :root {
+      /* Default Theme: Midnight Slate (#0F172A / #1E293B) */
+      --bg-primary: #0F172A;
+      --bg-secondary: #131C31;
+      --bg-card: #1E293B;
+      --bg-card-hover: #26344B;
+      --bg-input: #0B1221;
+      --bg-pill: #172033;
+      --bg-pill-hover: #25334D;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --text-muted: #94A3B8;
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-strong: rgba(255, 255, 255, 0.18);
+      --shadow-card: 0 14px 32px -10px rgba(2, 6, 23, 0.65);
+
+      /* Default Accent: Royal Gold (#D4AF37) */
+      --accent: #D4AF37;
+      --accent-hover: #E3C14C;
+      --accent-soft: rgba(212, 175, 55, 0.16);
+      --accent-border: rgba(212, 175, 55, 0.45);
+      --accent-contrast: #0F172A;
+
+      /* Dynamic Hover Spotlight Tint (updates smoothly on poster hover) */
+      --spotlight-tint: var(--accent);
+      --spotlight-x: 50%;
+      --spotlight-y: 12%;
+      --spotlight-opacity: 0.16;
+
+      /* Default Font Pairing: Classic Marquee (Cinzel + Plus Jakarta Sans) */
+      --font-display: 'Cinzel', Georgia, serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Geometry Tokens */
+      --radius-card: 14px;
+      --radius-panel: 18px;
+      --radius-pill: 9999px;
+      --radius-input: 12px;
+    }
+
+    /* Theme 2: Pure Obsidian Black (True OLED #000000 / #0B0B0E) */
+    body.theme-obsidian {
+      --bg-primary: #000000;
+      --bg-secondary: #060608;
+      --bg-card: #0B0B0E;
+      --bg-card-hover: #141419;
+      --bg-input: #050507;
+      --bg-pill: #121217;
+      --bg-pill-hover: #1E1E26;
+      --text-primary: #FFFFFF;
+      --text-secondary: #D4D4D8;
+      --text-muted: #8E8E98;
+      --border-subtle: #1D1D24;
+      --border-strong: #32323E;
+      --shadow-card: 0 14px 34px -8px rgba(0, 0, 0, 0.95);
+    }
+
+    /* Theme 3: Velvet Cinema (#141118 / #211C28 with #FAF7F2 cream text) */
+    body.theme-velvet {
+      --bg-primary: #141118;
+      --bg-secondary: #1A1620;
+      --bg-card: #211C28;
+      --bg-card-hover: #2B2434;
+      --bg-input: #17131D;
+      --bg-pill: #282131;
+      --bg-pill-hover: #352C41;
+      --text-primary: #FAF7F2;
+      --text-secondary: #D5C8DF;
+      --text-muted: #9A8BA6;
+      --border-subtle: rgba(250, 247, 242, 0.09);
+      --border-strong: rgba(250, 247, 242, 0.19);
+      --shadow-card: 0 16px 36px -10px rgba(7, 4, 12, 0.72);
+    }
+
+    /* Theme 4: Matinee Ivory (#FAF7F2 / #FFFFFF with dark ink text) */
+    body.theme-ivory {
+      --bg-primary: #FAF7F2;
+      --bg-secondary: #F2EDE4;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #FDFBF7;
+      --bg-input: #F7F3EB;
+      --bg-pill: #EDE6D8;
+      --bg-pill-hover: #E2D9C7;
+      --text-primary: #1C1917;
+      --text-secondary: #44403C;
+      --text-muted: #78716C;
+      --border-subtle: rgba(28, 25, 23, 0.11);
+      --border-strong: rgba(28, 25, 23, 0.22);
+      --shadow-card: 0 12px 28px -8px rgba(45, 36, 22, 0.11);
+    }
+
+    /* ==========================================================================
+       IMMERSIVE SCREENING-ROOM ATMOSPHERE (SPOTLIGHT, VIGNETTE & FILM GRAIN)
+       ========================================================================== */
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      transition: background-color 0.28s ease, color 0.28s ease;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Theater Spotlight Layer */
+    #ambientSpotlight {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(900px circle at var(--spotlight-x) var(--spotlight-y), color-mix(in srgb, var(--spotlight-tint) 22%, transparent), transparent 68%),
+        radial-gradient(700px circle at 85% 85%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 65%);
+      opacity: 1;
+      transition: opacity 0.45s ease, background 0.5s ease;
+    }
+
+    /* Subtle Screening-Room Vignette + Film Grain Overlay */
+    #cinemaAtmosphereOverlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      box-shadow: inset 0 0 140px rgba(0, 0, 0, 0.42);
+      background-image: radial-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 0);
+      background-size: 24px 24px;
+      transition: opacity 0.35s ease;
+    }
+    body.theme-ivory #cinemaAtmosphereOverlay {
+      box-shadow: inset 0 0 110px rgba(68, 55, 38, 0.08);
+      background-image: radial-gradient(rgba(28, 25, 23, 0.025) 1px, transparent 0);
+    }
+
+    body.glow-disabled #ambientSpotlight,
+    body.glow-disabled #cinemaAtmosphereOverlay {
+      opacity: 0;
+    }
+
+    /* Ensure interactive content sits cleanly above ambient overlays */
+    header, main, footer {
+      position: relative;
+      z-index: 2;
+    }
+
+    .font-brand {
+      font-family: var(--font-display);
+    }
+    .font-editorial {
+      font-family: var(--font-serif);
+    }
+    .font-ui {
+      font-family: var(--font-sans);
+    }
+
+    .studio-panel {
+      background-color: color-mix(in srgb, var(--bg-card) 94%, transparent);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-panel);
+      box-shadow: var(--shadow-card);
+    }
+
+    .modal-surface {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-panel);
+    }
+
+    .input-surface {
+      background-color: var(--bg-input);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-input);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .input-surface:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    .input-surface::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Filter Pill Buttons */
+    .filter-pill {
+      background-color: var(--bg-pill);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      transition: all 0.16s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .filter-pill:hover {
+      background-color: var(--bg-pill-hover);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+    .filter-pill.active {
+      background-color: var(--accent);
+      color: var(--accent-contrast);
+      border-color: var(--accent);
+      font-weight: 700;
+      box-shadow: 0 4px 16px var(--accent-soft);
+    }
+
+    /* High-Contrast ANY (OR) / ALL (AND) Segmented Toggle */
+    .logic-toggle {
+      display: inline-flex;
+      background-color: var(--bg-input);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      gap: 2px;
+      shrink: 0;
+    }
+    .logic-toggle button {
+      padding: 5px 13px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      transition: all 0.16s ease;
+      cursor: pointer;
+    }
+    .logic-toggle button.active {
+      background-color: var(--accent);
+      color: var(--accent-contrast);
+      box-shadow: 0 2px 10px var(--accent-soft);
+    }
+
+    /* Accent Button */
+    .btn-accent {
+      background-color: var(--accent);
+      color: var(--accent-contrast);
+      border-radius: var(--radius-input);
+      font-weight: 700;
+      transition: all 0.18s ease;
+      cursor: pointer;
+    }
+    .btn-accent:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px var(--accent-soft);
+    }
+
+    /* ==========================================================================
+       PAGE LAYOUT STYLES: 1. THEATER STUDIO | 2. EDITORIAL SHOWCASE | 3. COMPACT VAULT
+       ========================================================================== */
+    @media (min-width: 1024px) {
+      body.layout-studio #workspaceContainer {
+        display: grid;
+        grid-template-columns: 400px minmax(0, 1fr);
+        gap: 1.75rem;
+        align-items: start;
+      }
+      body.layout-studio #filterStudioSection {
+        position: sticky;
+        top: 5.5rem;
+        max-height: calc(100vh - 6.5rem);
+        overflow-y: auto;
+      }
+    }
+
+    /* Rich Interactive Poster Card */
+    .cinema-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .cinema-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 18px 38px -10px rgba(0, 0, 0, 0.72), 0 0 0 1px var(--accent-border), 0 0 26px var(--accent-soft);
+    }
+    .cinema-card img {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .cinema-card:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Hover Synopsis & Quick Actions Drawer on Poster Cards */
+    .card-hover-overlay {
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .cinema-card:hover .card-hover-overlay,
+    .cinema-card:focus-within .card-hover-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Custom Range Slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: var(--bg-pill);
+      border-radius: 999px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg-card);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: 2px solid var(--bg-card);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--bg-pill-hover);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* Skeleton Shimmer */
+    @keyframes pulseShimmer {
+      0%, 100% { opacity: 0.45; }
+      50% { opacity: 0.9; }
+    }
+    .skeleton {
+      background-color: var(--bg-pill);
+      animation: pulseShimmer 1.5s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col theme-slate layout-studio">
+
+  <!-- Immersive Screening-Room Ambient Spotlight & Film-Grain Atmosphere -->
+  <div id="ambientSpotlight" aria-hidden="true"></div>
+  <div id="cinemaAtmosphereOverlay" aria-hidden="true"></div>
+
+  <!-- ==========================================================================
+       STICKY NAVIGATION HEADER (CLEAN, COMPACT SURPRISE ME BUTTON)
+       ========================================================================== -->
+  <header class="sticky top-0 z-40 border-b backdrop-blur-xl" style="background-color: color-mix(in srgb, var(--bg-primary) 86%, transparent); border-color: var(--border-subtle);">
+    <div class="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+
+        <!-- Brand Identity: Bespoke Art Deco W·W·T Crest + Title -->
+        <a href="#top" id="brandResetBtn" class="flex items-center gap-3 group focus:outline-none shrink-0" title="Would Watch That — Reset to Default Discovery">
+          <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105" style="background: linear-gradient(145deg, var(--bg-card), var(--bg-secondary)); border: 1.5px solid var(--accent); box-shadow: 0 4px 18px var(--accent-soft);">
+            <svg viewBox="0 0 64 64" class="w-9 h-9" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="W·W·T Art Deco Cinema Crest">
+              <!-- Outer Marquee & Reel Frame -->
+              <rect x="4" y="4" width="56" height="56" rx="10" stroke="var(--accent)" stroke-width="1.8" />
+              <rect x="8.5" y="8.5" width="47" height="47" rx="7" stroke="var(--accent)" stroke-width="0.9" stroke-opacity="0.55" />
+              <!-- Art Deco Diamond Geometry -->
+              <polygon points="32,6 58,32 32,58 6,32" stroke="var(--accent)" stroke-width="1.15" stroke-opacity="0.65" />
+              <line x1="32" y1="6" x2="32" y2="14" stroke="var(--accent)" stroke-width="1.4" />
+              <line x1="32" y1="50" x2="32" y2="58" stroke="var(--accent)" stroke-width="1.4" />
+              <!-- Film Sprocket Corner Dots -->
+              <circle cx="14" cy="14" r="1.4" fill="var(--accent)" />
+              <circle cx="50" cy="14" r="1.4" fill="var(--accent)" />
+              <circle cx="14" cy="50" r="1.4" fill="var(--accent)" />
+              <circle cx="50" cy="50" r="1.4" fill="var(--accent)" />
+              <!-- Prominent W · W · T Monogram -->
+              <text x="32" y="36.5" text-anchor="middle" fill="var(--accent)" font-family="Cinzel, Georgia, serif" font-weight="800" font-size="13.2" letter-spacing="1.2">W·W·T</text>
+            </svg>
+          </div>
+          <div>
+            <h1 class="font-brand text-lg sm:text-2xl font-bold tracking-wider leading-tight" style="color: var(--text-primary);">
+              Would Watch That
+            </h1>
+            <p class="text-[10px] sm:text-[11px] tracking-[0.18em] uppercase font-semibold" style="color: var(--accent);">
+              Screening Room &amp; Discovery Studio
+            </p>
+          </div>
+        </a>
+
+        <!-- Compact Action Controls: Sleek Surprise Me, Watchlist & Settings -->
+        <div class="flex items-center gap-2 sm:gap-2.5">
+          <!-- Compact, Sleek "Surprise Me" Button -->
+          <button
+            type="button"
+            id="surpriseMeBtn"
+            class="btn-accent px-3 py-1.5 text-xs font-semibold flex items-center gap-1.5 shrink-0"
+            title="Pick a random acclaimed title matching your filters"
+          >
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+            </svg>
+            <span>Surprise Me</span>
+          </button>
+
+          <!-- Watchlist Drawer Button -->
+          <button
+            type="button"
+            id="openWatchlistBtn"
+            class="px-3 py-1.5 text-xs font-semibold border flex items-center gap-2 transition hover:opacity-90 shrink-0"
+            style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input); color: var(--text-primary);"
+            title="Open your saved Watchlist"
+          >
+            <svg class="w-3.5 h-3.5" style="color: var(--accent);" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+            </svg>
+            <span class="hidden sm:inline">Watchlist</span>
+            <span id="watchlistCountBadge" class="px-1.5 py-0.2 rounded-full text-[11px] font-bold" style="background-color: var(--accent); color: var(--accent-contrast);">0</span>
+          </button>
+
+          <!-- Settings & Style Modal Button -->
+          <button
+            type="button"
+            id="openSettingsBtn"
+            class="px-3 py-1.5 text-xs font-semibold border flex items-center gap-1.5 transition hover:opacity-90 shrink-0"
+            style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input); color: var(--text-primary);"
+            title="Customize Themes, 12 Accent Colours, Page Styles, Fonts & API Key"
+          >
+            <svg class="w-3.5 h-3.5" style="color: var(--accent);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span class="hidden sm:inline">Settings &amp; Style</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN DISCOVERY WORKSPACE
+       ========================================================================== -->
+  <main id="top" class="flex-1 max-w-[1560px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- Prominent 56px Hero Search Bar -->
+    <section class="max-w-4xl mx-auto">
+      <div class="relative flex items-center">
+        <span class="absolute left-4 pointer-events-none" style="color: var(--accent);">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path stroke-linecap="round" d="M21 21l-4.35-4.35"></path>
+          </svg>
+        </span>
+        <input
+          id="heroSearchInput"
+          type="text"
+          autocomplete="off"
+          placeholder="Search titles, franchises, actors, or vibes..."
+          class="input-surface w-full h-14 pl-12 pr-12 text-sm sm:text-base font-medium shadow-lg"
+        />
+        <button
+          type="button"
+          id="clearHeroSearchBtn"
+          class="hidden absolute right-3.5 w-8 h-8 rounded-full flex items-center justify-center transition hover:opacity-80"
+          style="background-color: var(--bg-pill); color: var(--text-primary);"
+          title="Clear search"
+        >
+          ✕
+        </button>
+      </div>
+    </section>
+
+    <!-- Two-Column (Theater Studio) or Stacked (Editorial Showcase / Compact Vault) Container -->
+    <div id="workspaceContainer" class="space-y-7">
+
+      <!-- ======================================================================
+           10-SECTION FILTER STUDIO (EXACT SPECIFIED ORDER)
+           ====================================================================== -->
+      <aside id="filterStudioSection" class="studio-panel p-5 sm:p-6">
+        <!-- Studio Header -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b" style="border-color: var(--border-subtle);">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shrink-0" style="background-color: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-border);">
+              ✦
+            </span>
+            <div>
+              <h2 class="font-editorial text-lg font-bold leading-tight" style="color: var(--text-primary);">
+                Filter Studio
+              </h2>
+              <p id="studioActiveCountLabel" class="text-[11px]" style="color: var(--text-muted);">
+                10 precision dimensions
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              id="resetAllFiltersBtn"
+              class="px-3 py-1.5 text-xs font-semibold border transition hover:opacity-85"
+              style="background-color: var(--bg-pill); border-color: var(--border-strong); border-radius: var(--radius-pill); color: var(--text-secondary);"
+            >
+              Reset
+            </button>
+            <button
+              type="button"
+              id="toggleStudioCollapseBtn"
+              class="px-3 py-1.5 text-xs font-semibold border transition"
+              style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);"
+            >
+              Hide ▲
+            </button>
+          </div>
+        </div>
+
+        <!-- Studio Body -->
+        <div id="filterStudioBody" class="pt-5 space-y-6">
+
+          <!-- ==================================================================
+               01. FORMAT & MEDIUM
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3.5" style="border-color: var(--border-subtle);">
+            <label class="text-xs font-bold uppercase tracking-widest block" style="color: var(--accent);">
+              01. Format &amp; Medium
+            </label>
+
+            <div>
+              <span class="block text-[11px] font-semibold mb-2" style="color: var(--text-secondary);">Content Medium</span>
+              <div id="contentMediumContainer" class="flex flex-wrap gap-1.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <div>
+              <span class="block text-[11px] font-semibold mb-2" style="color: var(--text-secondary);">Format &amp; Visual Style</span>
+              <div id="visualStyleContainer" class="flex flex-wrap gap-1.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               02. GENRE
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                02. Genre
+              </label>
+              <div class="logic-toggle" data-logic-group="genre">
+                <button type="button" data-value="OR" class="active">ANY (OR)</button>
+                <button type="button" data-value="AND">ALL (AND)</button>
+              </div>
+            </div>
+            <div id="genreContainer" class="flex flex-wrap gap-1.5">
+              <!-- Populated dynamically from TMDB -->
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               03. MOODS, TROPES & STORY THEMES (IMMEDIATELY AFTER GENRE!)
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                03. Moods, Tropes &amp; Story Themes
+              </label>
+              <div class="logic-toggle" data-logic-group="mood">
+                <button type="button" data-value="OR" class="active">ANY (OR)</button>
+                <button type="button" data-value="AND">ALL (AND)</button>
+              </div>
+            </div>
+
+            <!-- Category Tabs: All | Vibes & Moods | Classic Tropes | Story Themes -->
+            <div id="moodCategoryTabs" class="flex flex-wrap gap-1.5">
+              <button type="button" data-mood-cat="all" class="filter-pill px-2.5 py-1 text-[11px] active">All (30)</button>
+              <button type="button" data-mood-cat="vibes" class="filter-pill px-2.5 py-1 text-[11px]">Vibes &amp; Moods</button>
+              <button type="button" data-mood-cat="tropes" class="filter-pill px-2.5 py-1 text-[11px]">Classic Tropes</button>
+              <button type="button" data-mood-cat="themes" class="filter-pill px-2.5 py-1 text-[11px]">Story Themes</button>
+            </div>
+
+            <!-- Selected Custom Keyword Chips -->
+            <div id="selectedCustomKeywordsChips" class="flex flex-wrap gap-1.5 empty:hidden"></div>
+
+            <!-- Custom Keyword Autocomplete Search (/search/keyword) -->
+            <div class="relative">
+              <input
+                id="customKeywordSearchInput"
+                type="text"
+                autocomplete="off"
+                placeholder="Search any custom trope or keyword (e.g., heist, cyberpunk, vampire)..."
+                class="input-surface w-full px-3 py-2 text-xs"
+              />
+              <div id="customKeywordDropdown" class="hidden absolute left-0 right-0 mt-1 max-h-52 overflow-y-auto z-30 border shadow-2xl" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input);"></div>
+            </div>
+
+            <!-- 30 Curated Mood, Trope & Story Theme Pills -->
+            <div id="moodsTropesContainer" class="flex flex-wrap gap-1.5 max-h-64 overflow-y-auto pr-1">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               04. MIN RATING & ORIGINAL LANGUAGE
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <label class="text-xs font-bold uppercase tracking-widest block" style="color: var(--accent);">
+              04. Min Rating &amp; Original Language
+            </label>
+
+            <!-- Minimum Score Slider -->
+            <div class="p-3 rounded-xl border space-y-2" style="background-color: var(--bg-input); border-color: var(--border-subtle);">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold" style="color: var(--text-secondary);">Minimum Score</span>
+                <span id="minRatingReadout" class="text-xs font-bold" style="color: var(--accent);">★ Any (0.0+)</span>
+              </div>
+              <input id="minRatingSlider" type="range" min="0" max="9" step="0.5" value="0" class="w-full" />
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <button type="button" class="rating-preset filter-pill px-2.5 py-0.5 text-[11px] active" data-rating="0">Any</button>
+                <button type="button" class="rating-preset filter-pill px-2.5 py-0.5 text-[11px]" data-rating="6.5">6.5+</button>
+                <button type="button" class="rating-preset filter-pill px-2.5 py-0.5 text-[11px]" data-rating="7.5">7.5+</button>
+                <button type="button" class="rating-preset filter-pill px-2.5 py-0.5 text-[11px]" data-rating="8">8.0+</button>
+              </div>
+            </div>
+
+            <!-- Minimum Vote Count + Searchable Original Language -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label for="minVotesSelect" class="block text-[11px] font-semibold mb-1" style="color: var(--text-secondary);">Minimum Vote Count</label>
+                <select id="minVotesSelect" class="input-surface w-full px-3 py-2 text-xs font-medium">
+                  <option value="0">Any Votes</option>
+                  <option value="50">50+ Votes</option>
+                  <option value="250" selected>250+ Votes</option>
+                  <option value="1000">1,000+ Votes</option>
+                  <option value="5000">5,000+ Votes</option>
+                </select>
+              </div>
+
+              <div class="relative">
+                <label for="languageSearchInput" class="block text-[11px] font-semibold mb-1" style="color: var(--text-secondary);">Original Language</label>
+                <div class="relative">
+                  <input
+                    id="languageSearchInput"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="All Languages..."
+                    class="input-surface w-full px-3 py-2 pr-7 text-xs font-medium"
+                  />
+                  <button type="button" id="clearLanguageBtn" class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold" style="color: var(--text-muted);">✕</button>
+                  <div id="languageDropdownList" class="hidden absolute left-0 right-0 mt-1 max-h-56 overflow-y-auto z-30 border shadow-2xl" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               05. CASTS
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                05. Casts
+              </label>
+              <div class="logic-toggle" data-logic-group="cast">
+                <button type="button" data-value="OR" class="active">ANY (OR)</button>
+                <button type="button" data-value="AND">ALL (AND)</button>
+              </div>
+            </div>
+
+            <div id="selectedCastsChips" class="flex flex-wrap gap-1.5 empty:hidden"></div>
+
+            <div class="relative">
+              <input
+                id="castSearchInput"
+                type="text"
+                autocomplete="off"
+                placeholder="Search any actor or actress to add..."
+                class="input-surface w-full px-3 py-2 text-xs"
+              />
+              <div id="castAutocompleteDropdown" class="hidden absolute left-0 right-0 mt-1 max-h-60 overflow-y-auto z-30 border shadow-2xl" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input);"></div>
+            </div>
+
+            <div>
+              <span class="block text-[11px] font-semibold mb-1.5" style="color: var(--text-muted);">Famous Cast Quick Picks</span>
+              <div id="castQuickPicksContainer" class="flex flex-wrap gap-1.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               06. DIRECTORS & CREATORS
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                06. Directors &amp; Creators
+              </label>
+              <div class="logic-toggle" data-logic-group="director">
+                <button type="button" data-value="OR" class="active">ANY (OR)</button>
+                <button type="button" data-value="AND">ALL (AND)</button>
+              </div>
+            </div>
+
+            <div id="selectedDirectorsChips" class="flex flex-wrap gap-1.5 empty:hidden"></div>
+
+            <div class="relative">
+              <input
+                id="directorSearchInput"
+                type="text"
+                autocomplete="off"
+                placeholder="Search any director or showrunner to add..."
+                class="input-surface w-full px-3 py-2 text-xs"
+              />
+              <div id="directorAutocompleteDropdown" class="hidden absolute left-0 right-0 mt-1 max-h-60 overflow-y-auto z-30 border shadow-2xl" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input);"></div>
+            </div>
+
+            <div>
+              <span class="block text-[11px] font-semibold mb-1.5" style="color: var(--text-muted);">Famous Directors &amp; Creators Quick Picks</span>
+              <div id="directorQuickPicksContainer" class="flex flex-wrap gap-1.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               07. STUDIOS & NETWORKS
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                07. Studios &amp; Networks
+              </label>
+              <div class="logic-toggle" data-logic-group="studio">
+                <button type="button" data-value="OR" class="active">ANY (OR)</button>
+                <button type="button" data-value="AND">ALL (AND)</button>
+              </div>
+            </div>
+
+            <div id="selectedStudiosChips" class="flex flex-wrap gap-1.5 empty:hidden"></div>
+
+            <div class="relative">
+              <input
+                id="studioSearchInput"
+                type="text"
+                autocomplete="off"
+                placeholder="Search production studios or TV networks..."
+                class="input-surface w-full px-3 py-2 text-xs"
+              />
+              <div id="studioAutocompleteDropdown" class="hidden absolute left-0 right-0 mt-1 max-h-60 overflow-y-auto z-30 border shadow-2xl" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input);"></div>
+            </div>
+
+            <div>
+              <span class="block text-[11px] font-semibold mb-1.5" style="color: var(--text-muted);">Famous Studios &amp; Networks Quick Picks</span>
+              <div id="studioQuickPicksContainer" class="flex flex-wrap gap-1.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               08. RELEASE ERA & YEAR FROM / TO
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <label class="text-xs font-bold uppercase tracking-widest block" style="color: var(--accent);">
+              08. Release Era &amp; Year From / To
+            </label>
+
+            <div id="eraPillsContainer" class="flex flex-wrap gap-1.5">
+              <!-- Populated by JS -->
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                id="yearFromInput"
+                type="number"
+                min="1888"
+                max="2030"
+                placeholder="From Year"
+                class="input-surface w-full px-3 py-2 text-xs text-center font-medium"
+              />
+              <span class="text-xs font-bold" style="color: var(--text-muted);">to</span>
+              <input
+                id="yearToInput"
+                type="number"
+                min="1888"
+                max="2030"
+                placeholder="To Year"
+                class="input-surface w-full px-3 py-2 text-xs text-center font-medium"
+              />
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               09. AWARDS & RECOGNITION
+               ================================================================== -->
+          <div class="pb-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+            <label class="text-xs font-bold uppercase tracking-widest block" style="color: var(--accent);">
+              09. Awards &amp; Recognition
+            </label>
+            <div id="awardsContainer" class="flex flex-wrap gap-1.5">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- ==================================================================
+               10. RUNTIME & MORE FILTERS
+               ================================================================== -->
+          <div class="space-y-4">
+            <label class="text-xs font-bold uppercase tracking-widest block" style="color: var(--accent);">
+              10. Runtime &amp; More Filters
+            </label>
+
+            <!-- Runtime Presets + Custom Min/Max Minutes -->
+            <div class="space-y-2">
+              <span class="block text-[11px] font-semibold" style="color: var(--text-secondary);">Runtime</span>
+              <div id="runtimePresetsContainer" class="flex flex-wrap gap-1.5">
+                <!-- Populated by JS -->
+              </div>
+              <div class="flex items-center gap-2 pt-1">
+                <input
+                  id="runtimeMinInput"
+                  type="number"
+                  min="1"
+                  max="600"
+                  placeholder="Min mins"
+                  class="input-surface w-full px-3 py-2 text-xs text-center font-medium"
+                />
+                <span class="text-xs font-bold" style="color: var(--text-muted);">–</span>
+                <input
+                  id="runtimeMaxInput"
+                  type="number"
+                  min="1"
+                  max="600"
+                  placeholder="Max mins"
+                  class="input-surface w-full px-3 py-2 text-xs text-center font-medium"
+                />
+              </div>
+            </div>
+
+            <!-- Streaming Region & Platforms -->
+            <div class="p-3 rounded-xl border space-y-2.5" style="background-color: var(--bg-input); border-color: var(--border-subtle);">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[11px] font-semibold" style="color: var(--text-secondary);">Streaming Region</span>
+                <select id="watchRegionSelect" class="input-surface px-2.5 py-1 text-xs font-semibold">
+                  <option value="IN" selected>🇮🇳 India (IN)</option>
+                  <option value="US">🇺🇸 United States (US)</option>
+                  <option value="GB">🇬🇧 United Kingdom (GB)</option>
+                  <option value="CA">🇨🇦 Canada (CA)</option>
+                  <option value="AU">🇦🇺 Australia (AU)</option>
+                  <option value="JP">🇯🇵 Japan (JP)</option>
+                  <option value="KR">🇰🇷 South Korea (KR)</option>
+                </select>
+              </div>
+              <div id="streamingProvidersContainer" class="flex flex-wrap gap-1.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Age Rating / Certification & Sort By -->
+            <div class="space-y-3">
+              <div>
+                <span class="block text-[11px] font-semibold mb-1.5" style="color: var(--text-secondary);">Age Rating / Certification</span>
+                <div id="certificationContainer" class="flex flex-wrap gap-1.5">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+              <div>
+                <label for="sortBySelect" class="block text-[11px] font-semibold mb-1" style="color: var(--text-secondary);">Sort By</label>
+                <select id="sortBySelect" class="input-surface w-full px-3 py-2 text-xs font-semibold">
+                  <option value="popularity.desc">🔥 Popularity</option>
+                  <option value="vote_average.desc">⭐ Highest Rated</option>
+                  <option value="release_date.desc">🆕 Newest Releases</option>
+                  <option value="vote_count.desc">🗳️ Most Voted</option>
+                  <option value="revenue.desc">💰 Box Office Revenue</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- ======================================================================
+           DISCOVERY RESULTS STAGE
+           ====================================================================== -->
+      <section class="min-w-0 space-y-5">
+        <!-- Results Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b" style="border-color: var(--border-subtle);">
+          <div>
+            <h2 id="resultsHeading" class="font-editorial text-2xl sm:text-3xl font-bold" style="color: var(--text-primary);">
+              Curated Movies
+            </h2>
+            <p id="resultsSubheading" class="text-xs sm:text-sm mt-0.5" style="color: var(--text-muted);">
+              Hover any poster to illuminate the screening room · Click for trailers &amp; where to watch
+            </p>
+          </div>
+
+          <div id="activeQuickBadges" class="flex flex-wrap items-center gap-1.5">
+            <!-- Active filter chips -->
+          </div>
+        </div>
+
+        <!-- Media Grid -->
+        <div id="resultsGrid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Empty / Error State -->
+        <div id="emptyStateBox" class="hidden studio-panel p-10 text-center max-w-lg mx-auto space-y-4">
+          <div class="text-4xl">🎞️</div>
+          <h3 id="emptyStateTitle" class="font-editorial text-xl font-bold" style="color: var(--text-primary);">
+            No Matching Titles Found
+          </h3>
+          <p id="emptyStateMessage" class="text-sm" style="color: var(--text-secondary);">
+            Try toggling filter logic from ALL (AND) to ANY (OR), lowering the minimum score, or broadening your year range.
+          </p>
+          <button type="button" id="emptyResetBtn" class="btn-accent px-5 py-2.5 text-xs">
+            Reset All Filters
+          </button>
+        </div>
+
+        <!-- Load More Pagination -->
+        <div id="loadMoreWrapper" class="hidden pt-4 flex justify-center">
+          <button
+            type="button"
+            id="loadMoreBtn"
+            class="px-7 py-3 text-xs sm:text-sm font-bold border transition hover:opacity-90 flex items-center gap-2"
+            style="background-color: var(--bg-card); border-color: var(--accent); border-radius: var(--radius-pill); color: var(--accent);"
+          >
+            <span>Load More Recommendations</span>
+            <span id="pageIndicatorText" class="text-xs font-normal" style="color: var(--text-muted);">(Page 1)</span>
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="mt-16 border-t py-8 px-4 sm:px-6 lg:px-8 text-center text-xs space-y-1.5" style="border-color: var(--border-subtle); color: var(--text-muted);">
+    <p class="font-brand tracking-[0.2em] uppercase font-bold" style="color: var(--accent);">
+      W · W · T — Would Watch That
+    </p>
+    <p>
+      Curated Cinema, TV Series, Reality &amp; Docuseries Discovery · Powered by TMDB v3 Metadata
+    </p>
+  </footer>
+
+  <!-- ==========================================================================
+       SCREENING ROOM DETAIL MODAL (ERROR-153-SAFE TRAILER, STREAM/RENT/BUY & MORE LIKE THIS)
+       ========================================================================== -->
+  <div id="detailModal" class="hidden fixed inset-0 z-50 overflow-y-auto p-3 sm:p-6 flex items-start justify-center" style="background-color: rgba(0, 0, 0, 0.84); backdrop-filter: blur(10px);" role="dialog" aria-modal="true">
+    <div id="detailModalContent" class="modal-surface w-full max-w-4xl my-auto overflow-hidden shadow-2xl relative">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SETTINGS & STYLE MODAL (4 THEMES, 12 ACCENTS, 3 LAYOUTS, 4 FONTS, GLOW & API KEY)
+       ========================================================================== -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 overflow-y-auto p-3 sm:p-6 flex items-start justify-center" style="background-color: rgba(0, 0, 0, 0.84); backdrop-filter: blur(10px);" role="dialog" aria-modal="true">
+    <div class="modal-surface w-full max-w-3xl my-auto p-5 sm:p-7 space-y-6 shadow-2xl relative">
+      <!-- Header -->
+      <div class="flex items-center justify-between pb-4 border-b" style="border-color: var(--border-subtle);">
+        <div>
+          <h2 class="font-editorial text-2xl font-bold" style="color: var(--text-primary);">
+            Settings &amp; Screening Room Style
+          </h2>
+          <p class="text-xs mt-0.5" style="color: var(--text-muted);">
+            Personalize your theme, 12 accent colours, page layout, typography, atmosphere &amp; database key
+          </p>
+        </div>
+        <button type="button" id="closeSettingsModalBtn" class="w-9 h-9 rounded-full flex items-center justify-center font-bold border" style="background-color: var(--bg-pill); border-color: var(--border-strong); color: var(--text-primary);">
+          ✕
+        </button>
+      </div>
+
+      <!-- 1. 4 Color Themes -->
+      <div class="space-y-2.5">
+        <label class="block text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+          Color Theme (4 Palettes)
+        </label>
+        <div id="themeSelectorGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      </div>
+
+      <!-- 2. 12 Accent Colours -->
+      <div class="space-y-2.5">
+        <label class="block text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+          Accent Colour (12 Curated Shades)
+        </label>
+        <div id="accentSwatchGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2"></div>
+      </div>
+
+      <!-- 3. Page Layout Styles -->
+      <div class="space-y-2.5">
+        <label class="block text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+          Page Layout Style
+        </label>
+        <div id="pageStyleGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5"></div>
+      </div>
+
+      <!-- 4. Font Pairings -->
+      <div class="space-y-2.5">
+        <label class="block text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+          Classic Font Pairing
+        </label>
+        <div id="fontPairingGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+      </div>
+
+      <!-- 5. Immersive Cinema Glow Toggle -->
+      <div class="p-4 rounded-xl border flex items-center justify-between gap-4" style="background-color: var(--bg-input); border-color: var(--border-subtle);">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-wider" style="color: var(--text-primary);">
+            Immersive Cinema Glow &amp; Film Grain
+          </p>
+          <p class="text-xs mt-0.5" style="color: var(--text-muted);">
+            Dynamic theater spotlight that shifts tint when hovering over movie posters, plus subtle screening-room vignette
+          </p>
+        </div>
+        <label class="inline-flex items-center cursor-pointer shrink-0">
+          <input id="immersiveGlowToggle" type="checkbox" checked class="w-5 h-5 rounded accent-amber-500 cursor-pointer" />
+        </label>
+      </div>
+
+      <!-- 6. Hidden Built-In API Key with Override -->
+      <div class="p-4 rounded-xl border space-y-3" style="background-color: var(--bg-input); border-color: var(--border-subtle);">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <label for="customApiKeyInput" class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+            TMDB v3 API Key Override
+          </label>
+          <span id="apiKeyStatusBadge" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            Built-in Cinema Database Key Active (Hidden)
+          </span>
+        </div>
+        <p class="text-xs" style="color: var(--text-muted);">
+          Ready to use immediately with the built-in hidden key. Enter your own TMDB v3 API key below if you wish to override it locally.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input
+            id="customApiKeyInput"
+            type="password"
+            autocomplete="off"
+            placeholder="Paste custom TMDB v3 API key..."
+            class="input-surface flex-1 px-3.5 py-2 text-xs"
+          />
+          <button type="button" id="saveApiKeyBtn" class="btn-accent px-4 py-2 text-xs">
+            Save Override
+          </button>
+          <button type="button" id="revertApiKeyBtn" class="px-3.5 py-2 text-xs font-semibold border" style="background-color: var(--bg-pill); border-color: var(--border-strong); border-radius: var(--radius-input); color: var(--text-secondary);">
+            Clear Override &amp; Restore Default
+          </button>
+        </div>
+      </div>
+
+      <!-- 7. Cache & Backup Controls -->
+      <div class="p-4 rounded-xl border space-y-3" style="background-color: var(--bg-input); border-color: var(--border-subtle);">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+            Local Cache &amp; Watchlist Backup
+          </label>
+          <span id="cachedItemsCountBadge" class="text-[11px] font-semibold" style="color: var(--text-muted);">
+            0 cached entries
+          </span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="exportDataBtn" class="px-3.5 py-2 text-xs font-semibold border transition hover:opacity-85" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input); color: var(--text-primary);">
+            ⬇ Export JSON Backup
+          </button>
+          <label class="px-3.5 py-2 text-xs font-semibold border transition hover:opacity-85 cursor-pointer" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input); color: var(--text-primary);">
+            ⬆ Import JSON Backup
+            <input id="importDataInput" type="file" accept=".json,application/json" class="hidden" />
+          </label>
+          <button type="button" id="clearCacheBtn" class="px-3.5 py-2 text-xs font-semibold border transition hover:opacity-85" style="background-color: var(--bg-card); border-color: var(--border-strong); border-radius: var(--radius-input); color: var(--text-secondary);">
+            🧹 Clear Local Cache
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       PERSISTENT WATCHLIST SLIDE-OVER DRAWER
+       ========================================================================== -->
+  <div id="watchlistDrawerOverlay" class="hidden fixed inset-0 z-50 flex justify-end" style="background-color: rgba(0, 0, 0, 0.76); backdrop-filter: blur(6px);">
+    <aside class="w-full max-w-md h-full flex flex-col border-l shadow-2xl" style="background-color: var(--bg-card); border-color: var(--border-strong);">
+      <div class="p-5 border-b space-y-3" style="border-color: var(--border-subtle);">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="font-editorial text-xl font-bold" style="color: var(--text-primary);">
+              Would Watch That List
+            </h2>
+            <p id="watchlistDrawerSubtitle" class="text-xs" style="color: var(--text-muted);">
+              0 saved titles
+            </p>
+          </div>
+          <button type="button" id="closeWatchlistBtn" class="w-9 h-9 rounded-full flex items-center justify-center font-bold border" style="background-color: var(--bg-pill); border-color: var(--border-strong); color: var(--text-primary);">
+            ✕
+          </button>
+        </div>
+
+        <!-- Watchlist Medium Filter Tabs -->
+        <div id="watchlistFilterTabs" class="flex gap-1.5">
+          <button type="button" data-wl-filter="all" class="filter-pill px-3 py-1 text-xs active">All</button>
+          <button type="button" data-wl-filter="movie" class="filter-pill px-3 py-1 text-xs">Movies</button>
+          <button type="button" data-wl-filter="tv" class="filter-pill px-3 py-1 text-xs">TV &amp; Shows</button>
+        </div>
+      </div>
+
+      <div id="watchlistItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-2.5">
+        <!-- Populated dynamically -->
+      </div>
+
+      <div class="p-4 border-t flex flex-wrap gap-2" style="border-color: var(--border-subtle); background-color: var(--bg-secondary);">
+        <button type="button" id="copyWatchlistTextBtn" class="btn-accent flex-1 py-2.5 px-3 text-xs">
+          📋 Copy List to Clipboard
+        </button>
+        <button type="button" id="clearWatchlistBtn" class="py-2.5 px-3 text-xs font-semibold border" style="background-color: var(--bg-pill); border-color: var(--border-strong); border-radius: var(--radius-input); color: var(--text-secondary);">
+          Clear All
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ==========================================================================
+       TOAST NOTIFICATION BANNER (NO ALERT() / CONFIRM())
+       ========================================================================== -->
+  <div id="toastBanner" class="pointer-events-none fixed bottom-5 left-1/2 -translate-x-1/2 z-[60] px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold shadow-2xl border opacity-0 translate-y-3 transition-all duration-250" style="background-color: var(--bg-card); border-color: var(--accent); color: var(--text-primary);">
+    Notification
+  </div>
+
+  <!-- ==========================================================================
+       MODULAR APPLICATION LOGIC (VANILLA JS, ZERO EXTERNAL BUILD TOOLS)
+       ========================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ------------------------------------------------------------------------
+         1. CONFIGURATION, HIDDEN BUILT-IN KEY & CURATED CATALOGS
+         ------------------------------------------------------------------------ */
+      const BUILTIN_TMDB_KEY = '1114624ba1ff059194414aa9b0dcf9dd';
+      const TMDB_BASE = 'https://api.themoviedb.org/3';
+      const IMG_POSTER = 'https://image.tmdb.org/t/p/w500';
+      const IMG_BACKDROP = 'https://image.tmdb.org/t/p/w780';
+      const IMG_HEADSHOT = 'https://image.tmdb.org/t/p/w185';
+      const IMG_LOGO = 'https://image.tmdb.org/t/p/w92';
+
+      const STORAGE_KEYS = {
+        PREFS: 'wwt_prefs_v2',
+        WATCHLIST: 'wwt_watchlist_v2',
+        CUSTOM_KEY: 'wwt_custom_key_v2',
+        CACHE: 'wwt_cache_v2'
+      };
+
+      // 4 Color Themes
+      const THEMES = [
+        { id: 'slate', name: 'Midnight Slate', desc: 'Deep slate (#0F172A) with crisp light typography', bg: '#0F172A', card: '#1E293B' },
+        { id: 'obsidian', name: 'Pure Obsidian Black', desc: 'True OLED (#000000) pitch-black cinema theme', bg: '#000000', card: '#0B0B0E' },
+        { id: 'velvet', name: 'Velvet Cinema', desc: 'Warm plum-charcoal (#141118) with cream text', bg: '#141118', card: '#211C28' },
+        { id: 'ivory', name: 'Matinee Ivory', desc: 'Warm daylight cinema (#FAF7F2) with dark ink text', bg: '#FAF7F2', card: '#FFFFFF' }
+      ];
+
+      // 12 Accent Colours
+      const ACCENTS = [
+        { id: 'royal-gold', name: 'Royal Gold', hex: '#D4AF37', hover: '#E3C14C', contrast: '#0F172A' },
+        { id: 'crimson-premiere', name: 'Crimson Premiere', hex: '#E11D48', hover: '#F43F5E', contrast: '#FFFFFF' },
+        { id: 'sunset-coral', name: 'Sunset Coral', hex: '#F97316', hover: '#FB923C', contrast: '#0F172A' },
+        { id: 'electric-cobalt', name: 'Electric Cobalt', hex: '#3B82F6', hover: '#60A5FA', contrast: '#FFFFFF' },
+        { id: 'emerald-screening', name: 'Emerald Screening', hex: '#10B981', hover: '#34D399', contrast: '#041610' },
+        { id: 'amethyst-noir', name: 'Amethyst Noir', hex: '#A855F7', hover: '#C084FC', contrast: '#FFFFFF' },
+        { id: 'champagne-rose', name: 'Champagne Rose', hex: '#F472B6', hover: '#F9A8D4', contrast: '#1F0916' },
+        { id: 'teal-matinee', name: 'Teal Matinee', hex: '#14B8A6', hover: '#2DD4BF', contrast: '#041715' },
+        { id: 'copper-reel', name: 'Copper Reel', hex: '#D97706', hover: '#F59E0B', contrast: '#FFFFFF' },
+        { id: 'sapphire-dusk', name: 'Sapphire Dusk', hex: '#6366F1', hover: '#818CF8', contrast: '#FFFFFF' },
+        { id: 'ruby-curtain', name: 'Ruby Curtain', hex: '#DC2626', hover: '#EF4444', contrast: '#FFFFFF' },
+        { id: 'silver-nitrate', name: 'Silver Nitrate', hex: '#94A3B8', hover: '#CBD5E1', contrast: '#0F172A' }
+      ];
+
+      // 3 Page Layout Styles
+      const PAGE_LAYOUTS = [
+        { id: 'studio', name: 'Theater Studio', desc: 'Persistent filter sidebar + 3–4 column poster grid' },
+        { id: 'editorial', name: 'Editorial Showcase', desc: 'Wide cinematic backdrop cards & serif titles' },
+        { id: 'vault', name: 'Compact Vault', desc: 'High-density 5–6 column poster grid' }
+      ];
+
+      // 4 Font Pairings
+      const FONT_PAIRINGS = [
+        { id: 'marquee', name: 'Classic Marquee', desc: 'Cinzel + Plus Jakarta Sans', display: "'Cinzel', Georgia, serif", serif: "'Playfair Display', Georgia, serif", sans: "'Plus Jakarta Sans', sans-serif" },
+        { id: 'editorial', name: 'Editorial Serif', desc: 'Playfair Display + Inter', display: "'Playfair Display', Georgia, serif", serif: "'Playfair Display', Georgia, serif", sans: "'Inter', sans-serif" },
+        { id: 'criterion', name: 'Literary Criterion', desc: 'Cormorant Garamond + Plus Jakarta Sans', display: "'Cormorant Garamond', Georgia, serif", serif: "'Cormorant Garamond', Georgia, serif", sans: "'Plus Jakarta Sans', sans-serif" },
+        { id: 'modern', name: 'Modern Clean', desc: 'Plus Jakarta Sans + Inter', display: "'Plus Jakarta Sans', sans-serif", serif: "'Plus Jakarta Sans', sans-serif", sans: "'Inter', sans-serif" }
+      ];
+
+      // 01a. Content Mediums (TMDB /discover/movie & /discover/tv with_type mappings)
+      const CONTENT_MEDIUMS = [
+        { id: 'movie', label: '🎬 Movies', endpoint: 'movie' },
+        { id: 'tv', label: '📺 TV Series', endpoint: 'tv', tvType: 4 },
+        { id: 'reality', label: '🌟 Reality Shows', endpoint: 'tv', tvType: 3, tvGenre: 10764 },
+        { id: 'miniseries', label: '🎞️ Miniseries', endpoint: 'tv', tvType: 2 },
+        { id: 'docuseries', label: '📽️ Docuseries', endpoint: 'tv', tvType: 1, tvGenre: 99 },
+        { id: 'talk', label: '🎙️ Talk & Variety', endpoint: 'tv', tvType: 5 }
+      ];
+
+      // 01b. Format & Visual Styles
+      const VISUAL_STYLES = [
+        { id: 'all', label: 'All Styles' },
+        { id: 'live_action', label: '🎥 Live Action' },
+        { id: 'anime', label: '⛩️ Anime' },
+        { id: 'cartoon', label: '🎨 Cartoon / Western Animation' },
+        { id: 'documentary', label: '🌍 Documentary' },
+        { id: 'stop_motion', label: '🧸 Stop-Motion' },
+        { id: 'musical', label: '🎶 Musical' },
+        { id: 'noir_bw', label: '🎞️ Neo-Noir / B&W' },
+        { id: 'anthology', label: '📚 Anthology' },
+        { id: 'biographical', label: '📖 Biographical' }
+      ];
+
+      const GENRE_EMOJIS = {
+        28: '💥', 12: '🧭', 16: '🎨', 35: '😂', 80: '🕵️', 99: '🌍',
+        18: '🎭', 10751: '👨‍👩‍👧‍👦', 14: '🐉', 36: '📜', 27: '👻', 10402: '🎵',
+        9648: '🔍', 10749: '💕', 878: '🚀', 10770: '📺', 53: '🔪', 10752: '⚔️',
+        37: '🤠', 10759: '⚡', 10762: '🧸', 10763: '📰', 10764: '🌟',
+        10765: '🛸', 10766: '💔', 10767: '🎙️', 10768: '🛡️'
+      };
+
+      // 03. 30 Curated Moods, Tropes & Story Themes (with pre-seeded TMDB keyword IDs + dynamic search fallback)
+      const MOODS_TROPES_CATALOG = [
+        // Vibes & Moods (10)
+        { id: 'mind-bending', cat: 'vibes', label: '🧠 Mind-Bending & Cerebral', queries: ['mind-bending', 'psychological'], seedIds: [12565, 234213] },
+        { id: 'cozy', cat: 'vibes', label: '🌧️ Cozy & Heartwarming', queries: ['heartwarming', 'feel-good'], seedIds: [18035, 207317] },
+        { id: 'dark-gritty', cat: 'vibes', label: '🌑 Dark, Gritty & Bleak', queries: ['dark', 'gritty'], seedIds: [10085, 193319] },
+        { id: 'adrenaline', cat: 'vibes', label: '⚡ Adrenaline & Edge-of-Seat', queries: ['suspense', 'high stakes'], seedIds: [9951, 207928] },
+        { id: 'satirical', cat: 'vibes', label: '🎭 Satirical & Dark Comedy', queries: ['satire', 'dark comedy'], seedIds: [8201, 10123] },
+        { id: 'melancholic', cat: 'vibes', label: '💔 Melancholic & Bittersweet', queries: ['melancholy', 'bittersweet'], seedIds: [9840, 173255] },
+        { id: 'whimsical', cat: 'vibes', label: '✨ Whimsical & Magical', queries: ['whimsical', 'magical realism'], seedIds: [170362, 2343] },
+        { id: 'eerie', cat: 'vibes', label: '🕯️ Eerie & Slow-Burn', queries: ['slow burn', 'eerie'], seedIds: [162846, 256183] },
+        { id: 'nostalgic', cat: 'vibes', label: '🌅 Nostalgic & Coming-of-Age', queries: ['coming of age', 'nostalgia'], seedIds: [10683, 4565] },
+        { id: 'claustrophobic', cat: 'vibes', label: '🔥 Intense & Claustrophobic', queries: ['claustrophobia', 'single location'], seedIds: [10183, 188957] },
+
+        // Classic Tropes (10)
+        { id: 'whodunit', cat: 'tropes', label: '🕵️ Whodunit & Locked-Room Mystery', queries: ['whodunit', 'locked room mystery'], seedIds: [10714, 156866] },
+        { id: 'time-loop', cat: 'tropes', label: '🔁 Time Loop & Time Travel', queries: ['time loop', 'time travel'], seedIds: [4379, 10854] },
+        { id: 'multiverse', cat: 'tropes', label: '🌌 Multiverse & Parallel Worlds', queries: ['multiverse', 'parallel universe'], seedIds: [9882, 161261] },
+        { id: 'found-family', cat: 'tropes', label: '🤝 Found Family & Ragtag Crew', queries: ['found family', 'ragtag'], seedIds: [180547, 155477] },
+        { id: 'revenge', cat: 'tropes', label: '🗡️ Revenge & Anti-Hero', queries: ['revenge', 'anti-hero'], seedIds: [9748, 2095] },
+        { id: 'plot-twist', cat: 'tropes', label: '🧩 Unreliable Narrator & Plot Twist', queries: ['plot twist', 'unreliable narrator'], seedIds: [10541, 208992] },
+        { id: 'forbidden-love', cat: 'tropes', label: '💘 Forbidden Love & Slow Romance', queries: ['forbidden love', 'slow burn romance'], seedIds: [2038, 9673] },
+        { id: 'survival', cat: 'tropes', label: '🏝️ Survival & Battle Royale', queries: ['survival', 'battle royale'], seedIds: [10349, 163053] },
+        { id: 'cyberpunk', cat: 'tropes', label: '🤖 AI Uprising & Cyberpunk', queries: ['cyberpunk', 'artificial intelligence'], seedIds: [12190, 310] },
+        { id: 'undercover', cat: 'tropes', label: '🎭 Double Life & Undercover', queries: ['undercover', 'double life'], seedIds: [3582, 1568] },
+
+        // Story Themes (10)
+        { id: 'class-divide', cat: 'themes', label: '🏛️ Class Divide & Eat the Rich', queries: ['class divide', 'social class'], seedIds: [167316, 240377] },
+        { id: 'identity', cat: 'themes', label: '🧬 Identity & Memory', queries: ['memory loss', 'identity'], seedIds: [1453, 5968] },
+        { id: 'family-secrets', cat: 'themes', label: '👨‍👩‍👧 Family Secrets & Generational Drama', queries: ['family secrets', 'dysfunctional family'], seedIds: [10292, 180340] },
+        { id: 'underdog', cat: 'themes', label: '🏆 Underdog Triumph & Obsession', queries: ['underdog', 'obsession'], seedIds: [6075, 156174] },
+        { id: 'true-story', cat: 'themes', label: '🌍 Based on True Story', queries: ['based on true story', 'biography'], seedIds: [9672, 5565] },
+        { id: 'space', cat: 'themes', label: '🚀 Space Exploration & First Contact', queries: ['space exploration', 'first contact'], seedIds: [9882, 1432] },
+        { id: 'courtroom', cat: 'themes', label: '⚖️ Courtroom & Political Conspiracy', queries: ['courtroom', 'political conspiracy'], seedIds: [10950, 10410] },
+        { id: 'music-art', cat: 'themes', label: '🎸 Music, Art & Creative Genius', queries: ['musician', 'artist'], seedIds: [4344, 158718] },
+        { id: 'post-apoc', cat: 'themes', label: '🧟 Post-Apocalyptic Rebuild', queries: ['post-apocalyptic', 'dystopia'], seedIds: [4458, 4565] },
+        { id: 'myth-folklore', cat: 'themes', label: '🐉 Myth, Folklore & Legend', queries: ['mythology', 'folklore'], seedIds: [2041, 12554] }
+      ];
+
+      // 04. Original Languages (Popular cinema languages pinned at top)
+      const LANGUAGES = [
+        { code: '', name: 'All Languages' },
+        { code: 'en', name: 'English' },
+        { code: 'hi', name: 'Hindi (हिन्दी)' },
+        { code: 'kn', name: 'Kannada (ಕನ್ನಡ)' },
+        { code: 'ta', name: 'Tamil (தமிழ்)' },
+        { code: 'te', name: 'Telugu (తెలుగు)' },
+        { code: 'ml', name: 'Malayalam (മലയാളം)' },
+        { code: 'ja', name: 'Japanese (日本語)' },
+        { code: 'ko', name: 'Korean (한국어)' },
+        { code: 'es', name: 'Spanish (Español)' },
+        { code: 'fr', name: 'French (Français)' },
+        { code: 'de', name: 'German (Deutsch)' },
+        { code: 'it', name: 'Italian (Italiano)' },
+        { code: 'zh', name: 'Mandarin (中文)' },
+        { code: 'cn', name: 'Cantonese (粵語)' },
+        { code: 'ar', name: 'Arabic (العربية)' },
+        { code: 'tr', name: 'Turkish (Türkçe)' },
+        { code: 'pt', name: 'Portuguese (Português)' },
+        { code: 'ru', name: 'Russian (Русский)' }
+      ];
+
+      // 05. 15 Famous Cast Quick Picks
+      const FAMOUS_CAST_PICKS = [
+        'Leonardo DiCaprio', 'Shah Rukh Khan', 'Cillian Murphy', 'Emma Stone', 'Irrfan Khan',
+        'Song Kang-ho', 'Tom Hanks', 'Florence Pugh', 'Denzel Washington', 'Kamal Haasan',
+        'Keanu Reeves', 'Zendaya', 'Mads Mikkelsen', 'Triptii Dimri', 'Ryan Gosling'
+      ];
+
+      // 06. 15 Famous Directors & Creators Quick Picks
+      const FAMOUS_DIRECTOR_PICKS = [
+        'Christopher Nolan', 'Denis Villeneuve', 'Quentin Tarantino', 'Hayao Miyazaki', 'Martin Scorsese',
+        'S.S. Rajamouli', 'Bong Joon-ho', 'David Fincher', 'Greta Gerwig', 'Wes Anderson',
+        'Mani Ratnam', 'Stanley Kubrick', 'Guillermo del Toro', 'Vetrimaaran', 'Akira Kurosawa'
+      ];
+
+      // 07. 15 Famous Studios & Networks Quick Picks
+      const FAMOUS_STUDIO_PICKS = [
+        { name: 'A24', companyId: 41077 },
+        { name: 'Studio Ghibli', companyId: 10342 },
+        { name: 'Pixar', companyId: 3 },
+        { name: 'Warner Bros.', companyId: 174 },
+        { name: 'Universal Pictures', companyId: 33 },
+        { name: 'Marvel Studios', companyId: 420 },
+        { name: 'HBO', companyId: 3268, networkId: 49 },
+        { name: 'Netflix', companyId: 178464, networkId: 213 },
+        { name: 'Syncopy', companyId: 9996 },
+        { name: 'Hombale Films', companyId: 112649 },
+        { name: 'Yash Raj Films', companyId: 1569 },
+        { name: 'Dharma Productions', companyId: 19146 },
+        { name: 'Lionsgate', companyId: 1632 },
+        { name: 'Searchlight Pictures', companyId: 43 },
+        { name: 'MAPPA', companyId: 21444 }
+      ];
+
+      // 08. Release Eras
+      const RELEASE_ERAS = [
+        { id: 'all', label: 'All Eras', from: '', to: '' },
+        { id: '2020s', label: '2020s', from: 2020, to: 2029 },
+        { id: '2010s', label: '2010s', from: 2010, to: 2019 },
+        { id: '2000s', label: '2000s', from: 2000, to: 2009 },
+        { id: '1990s', label: '1990s', from: 1990, to: 1999 },
+        { id: '1980s', label: '1980s', from: 1980, to: 1989 },
+        { id: '1970s', label: '1970s & Classics', from: 1900, to: 1979 }
+      ];
+
+      // 09. 10 Awards & Recognition Pills
+      const AWARDS_CATALOG = [
+        { id: 'oscar', label: '🏆 Oscar / Academy Award', queries: ['academy award', 'oscar winner'], seedIds: [18163, 210024] },
+        { id: 'best-picture', label: '👑 Oscar Best Picture', queries: ['academy award for best picture', 'best picture'], seedIds: [18163] },
+        { id: 'cannes', label: '🌴 Cannes / Palme d\'Or', queries: ['palme d\'or', 'cannes film festival'], seedIds: [18034, 157758] },
+        { id: 'emmy', label: '📺 Emmy Winner', queries: ['emmy award', 'primetime emmy'], seedIds: [193171] },
+        { id: 'golden-globe', label: '🌐 Golden Globe', queries: ['golden globe'], seedIds: [18164] },
+        { id: 'bafta', label: '🎭 BAFTA', queries: ['bafta'], seedIds: [18165] },
+        { id: 'sundance', label: '🏔️ Sundance', queries: ['sundance'], seedIds: [167043] },
+        { id: 'venice', label: '🦁 Venice Film Festival', queries: ['golden lion', 'venice film festival'], seedIds: [18035] },
+        { id: 'berlinale', label: '🐻 Berlinale', queries: ['golden bear', 'berlin international film festival'], seedIds: [18036] },
+        { id: 'national-award', label: '🇮🇳 National Film Award', queries: ['national film award', 'indian cinema'], seedIds: [232613] }
+      ];
+
+      // 10a. Runtime Presets
+      const RUNTIME_PRESETS = [
+        { id: 'any', label: 'Any Length', min: '', max: '' },
+        { id: '90m', label: '~1.5 Hours (75–105m)', min: 75, max: 105 },
+        { id: '120m', label: '~2 Hours (106–135m)', min: 106, max: 135 },
+        { id: '150m', label: '~2.5 Hours (136–165m)', min: 136, max: 165 },
+        { id: '180m', label: '3+ Hours Epic (166m+)', min: 166, max: '' }
+      ];
+
+      // 10b. Streaming Platforms (TMDB Watch Provider IDs)
+      const STREAMING_PLATFORMS = [
+        { id: '8', label: 'Netflix' },
+        { id: '119|9', label: 'Amazon Prime Video' },
+        { id: '122|337', label: 'Disney+ / Hotstar' },
+        { id: '220', label: 'JioCinema' },
+        { id: '350', label: 'Apple TV+' },
+        { id: '11', label: 'MUBI' },
+        { id: '283', label: 'Crunchyroll' },
+        { id: '237', label: 'SonyLIV' },
+        { id: '232', label: 'ZEE5' }
+      ];
+
+      // 10c. Age Ratings / Certifications
+      const CERTIFICATIONS = [
+        { id: '', label: 'Any' },
+        { id: 'G', label: 'Family / U / G', tv: 'TV-G' },
+        { id: 'PG-13', label: 'Teen / UA / PG-13', tv: 'TV-14' },
+        { id: 'R', label: 'Mature / A / R', tv: 'TV-MA' }
+      ];
+
+      /* ------------------------------------------------------------------------
+         2. STATE & PERSISTENCE
+         ------------------------------------------------------------------------ */
+      const defaultPrefs = {
+        theme: 'slate',
+        accent: 'royal-gold',
+        layout: 'studio',
+        font: 'marquee',
+        immersiveGlow: true
+      };
+
+      let prefs = loadJSON(STORAGE_KEYS.PREFS, defaultPrefs);
+      let watchlist = loadJSON(STORAGE_KEYS.WATCHLIST, []);
+      let cacheStore = loadJSON(STORAGE_KEYS.CACHE, {
+        keywords: {},
+        persons: {},
+        companies: {},
+        movieGenres: null,
+        tvGenres: null
+      });
+
+      const state = {
+        searchQuery: '',
+        medium: 'movie',
+        visualStyle: 'all',
+        selectedGenres: [],
+        genreLogic: 'OR',
+        moodCategory: 'all',
+        selectedMoods: [], // ['mind-bending', ...]
+        customKeywords: [], // [{ id, name }]
+        moodLogic: 'OR',
+        minRating: 0,
+        minVotes: 250,
+        language: '',
+        selectedCasts: [], // [{ id, name, profile_path }]
+        castLogic: 'OR',
+        selectedDirectors: [], // [{ id, name, profile_path }]
+        directorLogic: 'OR',
+        selectedStudios: [], // [{ id, name, companyId, networkId }]
+        studioLogic: 'OR',
+        era: 'all',
+        yearFrom: '',
+        yearTo: '',
+        selectedAwards: [], // ['oscar', ...]
+        runtimePreset: 'any',
+        runtimeMin: '',
+        runtimeMax: '',
+        watchRegion: 'IN',
+        selectedProviders: [], // ['8', ...]
+        certification: '',
+        sortBy: 'popularity.desc',
+        page: 1,
+        totalPages: 1,
+        results: [],
+        isLoading: false,
+        studioCollapsed: false,
+        watchlistTab: 'all'
+      };
+
+      /* ------------------------------------------------------------------------
+         3. STORAGE & HELPERS
+         ------------------------------------------------------------------------ */
+      function loadJSON(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch (err) {
+          return fallback;
+        }
+      }
+
+      function saveJSON(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (err) {
+          // Graceful fallback if storage quota is full
+        }
+      }
+
+      function getActiveApiKey() {
+        try {
+          const override = localStorage.getItem(STORAGE_KEYS.CUSTOM_KEY);
+          if (override && override.trim().length > 8) {
+            return override.trim();
+          }
+        } catch (err) {
+          // Ignore
+        }
+        return BUILTIN_TMDB_KEY;
+      }
+
+      function hasCustomKeyOverride() {
+        try {
+          const override = localStorage.getItem(STORAGE_KEYS.CUSTOM_KEY);
+          return Boolean(override && override.trim().length > 8);
+        } catch (err) {
+          return false;
+        }
+      }
+
+      let toastTimer = null;
+      function showToast(msg) {
+        const banner = document.getElementById('toastBanner');
+        banner.textContent = msg;
+        banner.classList.remove('opacity-0', 'translate-y-3');
+        banner.classList.add('opacity-100', 'translate-y-0');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          banner.classList.remove('opacity-100', 'translate-y-0');
+          banner.classList.add('opacity-0', 'translate-y-3');
+        }, 2800);
+      }
+
+      function debounce(fn, delay) {
+        let timer = null;
+        return function (...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+      }
+
+      function escapeHTML(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function getCurrentMediumObj() {
+        return CONTENT_MEDIUMS.find((m) => m.id === state.medium) || CONTENT_MEDIUMS[0];
+      }
+
+      function isTvMode() {
+        return getCurrentMediumObj().endpoint === 'tv';
+      }
+
+      /* ------------------------------------------------------------------------
+         4. APPEARANCE & IMMERSIVE THEATER SPOTLIGHT ENGINE
+         ------------------------------------------------------------------------ */
+      function applyPreferences() {
+        const body = document.body;
+
+        // 1. Theme
+        body.classList.remove('theme-slate', 'theme-obsidian', 'theme-velvet', 'theme-ivory');
+        body.classList.add(`theme-${prefs.theme || 'slate'}`);
+
+        // 2. Accent Colour
+        const accentObj = ACCENTS.find((a) => a.id === prefs.accent) || ACCENTS[0];
+        document.documentElement.style.setProperty('--accent', accentObj.hex);
+        document.documentElement.style.setProperty('--accent-hover', accentObj.hover);
+        document.documentElement.style.setProperty('--accent-contrast', accentObj.contrast);
+        document.documentElement.style.setProperty('--accent-soft', `${accentObj.hex}26`);
+        document.documentElement.style.setProperty('--accent-border', `${accentObj.hex}75`);
+        document.documentElement.style.setProperty('--spotlight-tint', accentObj.hex);
+
+        // 3. Page Layout Style
+        body.classList.remove('layout-studio', 'layout-editorial', 'layout-vault');
+        body.classList.add(`layout-${prefs.layout || 'studio'}`);
+
+        // 4. Font Pairing
+        const fontObj = FONT_PAIRINGS.find((f) => f.id === prefs.font) || FONT_PAIRINGS[0];
+        document.documentElement.style.setProperty('--font-display', fontObj.display);
+        document.documentElement.style.setProperty('--font-serif', fontObj.serif);
+        document.documentElement.style.setProperty('--font-sans', fontObj.sans);
+
+        // 5. Immersive Cinema Glow Toggle
+        body.classList.toggle('glow-disabled', prefs.immersiveGlow === false);
+
+        saveJSON(STORAGE_KEYS.PREFS, prefs);
+        updateGridColumnsForLayout();
+      }
+
+      function updateGridColumnsForLayout() {
+        const grid = document.getElementById('resultsGrid');
+        if (!grid) return;
+        if (prefs.layout === 'editorial') {
+          grid.className = 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5';
+        } else if (prefs.layout === 'vault') {
+          grid.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3.5';
+        } else {
+          // Default Theater Studio
+          grid.className = 'grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5';
+        }
+      }
+
+      // Subtle dynamic ambient spotlight shift on poster hover
+      const HOVER_TINTS = ['#D4AF37', '#3B82F6', '#E11D48', '#10B981', '#A855F7', '#F97316', '#14B8A6'];
+      function bindAmbientSpotlightHover() {
+        const grid = document.getElementById('resultsGrid');
+        grid.addEventListener('mouseover', (e) => {
+          if (prefs.immersiveGlow === false) return;
+          const card = e.target.closest('.cinema-card');
+          if (!card) return;
+          const rect = card.getBoundingClientRect();
+          const xPct = Math.round(((rect.left + rect.width / 2) / window.innerWidth) * 100);
+          const yPct = Math.round(((rect.top + rect.height / 2) / window.innerHeight) * 100);
+          const idx = Number(card.dataset.cardIndex || 0) % HOVER_TINTS.length;
+          document.documentElement.style.setProperty('--spotlight-x', `${xPct}%`);
+          document.documentElement.style.setProperty('--spotlight-y', `${yPct}%`);
+          document.documentElement.style.setProperty('--spotlight-tint', HOVER_TINTS[idx]);
+        });
+
+        grid.addEventListener('mouseleave', () => {
+          const accentObj = ACCENTS.find((a) => a.id === prefs.accent) || ACCENTS[0];
+          document.documentElement.style.setProperty('--spotlight-x', '50%');
+          document.documentElement.style.setProperty('--spotlight-y', '12%');
+          document.documentElement.style.setProperty('--spotlight-tint', accentObj.hex);
+        });
+      }
+
+      /* ------------------------------------------------------------------------
+         5. TMDB API CLIENT & KEYWORD/ENTITY RESOLVERS
+         ------------------------------------------------------------------------ */
+      async function tmdbFetch(path, params = {}) {
+        const url = new URL(`${TMDB_BASE}${path}`);
+        url.searchParams.set('api_key', getActiveApiKey());
+        Object.entries(params).forEach(([k, v]) => {
+          if (v !== undefined && v !== null && v !== '') {
+            url.searchParams.set(k, String(v));
+          }
+        });
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+          throw new Error(`TMDB API returned HTTP ${response.status}`);
+        }
+        return response.json();
+      }
+
+      async function resolveCatalogKeywordIds(item) {
+        const cacheKey = `cat:${item.id}`;
+        if (cacheStore.keywords[cacheKey]) {
+          return cacheStore.keywords[cacheKey];
+        }
+        const idSet = new Set(item.seedIds || []);
+        for (const q of item.queries || []) {
+          try {
+            const data = await tmdbFetch('/search/keyword', { query: q });
+            (data.results || []).slice(0, 2).forEach((kw) => idSet.add(kw.id));
+          } catch (err) {
+            // Continue with seedIds
+          }
+        }
+        const resolved = Array.from(idSet);
+        cacheStore.keywords[cacheKey] = resolved;
+        saveJSON(STORAGE_KEYS.CACHE, cacheStore);
+        return resolved;
+      }
+
+      async function resolvePersonByName(name) {
+        const norm = name.toLowerCase().trim();
+        if (cacheStore.persons[norm]) {
+          return cacheStore.persons[norm];
+        }
+        const data = await tmdbFetch('/search/person', { query: name });
+        const match = (data.results || [])[0];
+        if (match) {
+          const person = { id: match.id, name: match.name, profile_path: match.profile_path || null };
+          cacheStore.persons[norm] = person;
+          saveJSON(STORAGE_KEYS.CACHE, cacheStore);
+          return person;
+        }
+        return null;
+      }
+
+      async function resolveCompanyByName(name) {
+        const norm = name.toLowerCase().trim();
+        if (cacheStore.companies[norm]) {
+          return cacheStore.companies[norm];
+        }
+        const data = await tmdbFetch('/search/company', { query: name });
+        const match = (data.results || [])[0];
+        if (match) {
+          const studio = { id: match.id, name: match.name, companyId: match.id, networkId: null };
+          cacheStore.companies[norm] = studio;
+          saveJSON(STORAGE_KEYS.CACHE, cacheStore);
+          return studio;
+        }
+        return null;
+      }
+
+      async function loadGenresForCurrentMedium() {
+        const key = isTvMode() ? 'tvGenres' : 'movieGenres';
+        if (!cacheStore[key]) {
+          try {
+            const data = await tmdbFetch(isTvMode() ? '/genre/tv/list' : '/genre/movie/list');
+            cacheStore[key] = data.genres || [];
+            saveJSON(STORAGE_KEYS.CACHE, cacheStore);
+          } catch (err) {
+            cacheStore[key] = [];
+          }
+        }
+        renderGenrePills(cacheStore[key]);
+      }
+
+      /* ------------------------------------------------------------------------
+         6. CORE DISCOVERY & SEARCH ENGINE
+         ------------------------------------------------------------------------ */
+      async function executeDiscovery(resetPage = true) {
+        if (resetPage) {
+          state.page = 1;
+          state.results = [];
+        }
+        state.isLoading = true;
+        renderSkeletons(resetPage);
+        updateActiveSummaryUI();
+
+        try {
+          if (state.searchQuery.trim().length > 0) {
+            await executeHeroSearch(resetPage);
+            return;
+          }
+
+          const mediumObj = getCurrentMediumObj();
+          const isTv = mediumObj.endpoint === 'tv';
+
+          // TV / Reality / Miniseries with Cast or Director filters via /person/{id}/tv_credits
+          if (isTv && (state.selectedCasts.length > 0 || state.selectedDirectors.length > 0)) {
+            await executeTvPersonCreditsDiscovery();
+            return;
+          }
+
+          const params = {
+            page: state.page,
+            include_adult: false
+          };
+
+          // Sort mapping
+          let sortVal = state.sortBy;
+          if (sortVal === 'release_date.desc') sortVal = isTv ? 'first_air_date.desc' : 'primary_release_date.desc';
+          if (sortVal === 'revenue.desc' && isTv) sortVal = 'popularity.desc';
+          params.sort_by = sortVal;
+
+          // Content Medium TV constraints
+          const includeGenres = [...state.selectedGenres];
+          const excludeGenres = [];
+
+          if (isTv) {
+            if (mediumObj.tvType !== undefined) params.with_type = mediumObj.tvType;
+            if (mediumObj.tvGenre && !includeGenres.includes(mediumObj.tvGenre)) {
+              includeGenres.push(mediumObj.tvGenre);
+            }
+          }
+
+          // Visual & Production Style
+          const extraKeywordIds = new Set();
+          if (state.visualStyle !== 'all') {
+            switch (state.visualStyle) {
+              case 'live_action':
+                excludeGenres.push(16);
+                break;
+              case 'anime':
+                if (!includeGenres.includes(16)) includeGenres.push(16);
+                if (!state.language) params.with_original_language = 'ja';
+                break;
+              case 'cartoon':
+                if (!includeGenres.includes(16)) includeGenres.push(16);
+                excludeGenres.push(10763);
+                extraKeywordIds.add(15101); // cartoon / western animation
+                break;
+              case 'documentary':
+                if (!includeGenres.includes(99)) includeGenres.push(99);
+                break;
+              case 'stop_motion':
+                extraKeywordIds.add(10121); // stop motion
+                break;
+              case 'musical':
+                if (!isTv && !includeGenres.includes(10402)) includeGenres.push(10402);
+                else extraKeywordIds.add(4344);
+                break;
+              case 'noir_bw':
+                extraKeywordIds.add(10085); // neo-noir / black and white
+                break;
+              case 'anthology':
+                extraKeywordIds.add(9714); // anthology
+                break;
+              case 'biographical':
+                extraKeywordIds.add(5565); // biography
+                break;
+            }
+          }
+
+          // 02. Genres
+          if (includeGenres.length > 0) {
+            const sep = state.genreLogic === 'AND' ? ',' : '|';
+            params.with_genres = includeGenres.join(sep);
+          }
+          if (excludeGenres.length > 0) {
+            params.without_genres = excludeGenres.join(',');
+          }
+
+          // 03. Moods, Tropes & Story Themes + Custom Keywords
+          const moodGroups = [];
+          for (const moodId of state.selectedMoods) {
+            const item = MOODS_TROPES_CATALOG.find((m) => m.id === moodId);
+            if (item) {
+              const ids = await resolveCatalogKeywordIds(item);
+              if (ids.length > 0) moodGroups.push(ids);
+            }
+          }
+          for (const kw of state.customKeywords) {
+            moodGroups.push([kw.id]);
+          }
+
+          const keywordParamParts = [];
+          if (moodGroups.length > 0) {
+            if (state.moodLogic === 'AND') {
+              // Each selected mood/trope group must match (comma-separated AND groups)
+              moodGroups.forEach((grp) => keywordParamParts.push(grp.join('|')));
+            } else {
+              // ANY selected mood/trope matches (pipe-separated OR)
+              const flat = new Set();
+              moodGroups.forEach((grp) => grp.forEach((id) => flat.add(id)));
+              keywordParamParts.push(Array.from(flat).join('|'));
+            }
+          }
+
+          // 09. Awards & Recognition keywords
+          const awardIds = new Set();
+          for (const awId of state.selectedAwards) {
+            const awObj = AWARDS_CATALOG.find((a) => a.id === awId);
+            if (awObj) {
+              const ids = await resolveCatalogKeywordIds(awObj);
+              ids.forEach((id) => awardIds.add(id));
+            }
+          }
+          if (awardIds.size > 0) {
+            keywordParamParts.push(Array.from(awardIds).join('|'));
+          }
+          if (extraKeywordIds.size > 0) {
+            keywordParamParts.push(Array.from(extraKeywordIds).join('|'));
+          }
+
+          if (keywordParamParts.length > 0) {
+            params.with_keywords = keywordParamParts.join(',');
+          }
+
+          // 04. Min Rating & Original Language
+          if (Number(state.minRating) > 0) params['vote_average.gte'] = state.minRating;
+          if (Number(state.minVotes) > 0) params['vote_count.gte'] = state.minVotes;
+          if (state.language) params.with_original_language = state.language;
+
+          // 05. Casts (Movies)
+          if (!isTv && state.selectedCasts.length > 0) {
+            const sep = state.castLogic === 'AND' ? ',' : '|';
+            params.with_cast = state.selectedCasts.map((c) => c.id).join(sep);
+          }
+
+          // 06. Directors & Creators (Movies)
+          if (!isTv && state.selectedDirectors.length > 0) {
+            const sep = state.directorLogic === 'AND' ? ',' : '|';
+            params.with_crew = state.selectedDirectors.map((d) => d.id).join(sep);
+          }
+
+          // 07. Studios & Networks
+          if (state.selectedStudios.length > 0) {
+            const sep = state.studioLogic === 'AND' ? ',' : '|';
+            if (isTv) {
+              const netIds = state.selectedStudios.filter((s) => s.networkId).map((s) => s.networkId);
+              const compIds = state.selectedStudios.filter((s) => !s.networkId && s.companyId).map((s) => s.companyId);
+              if (netIds.length > 0) params.with_networks = netIds.join(sep);
+              if (compIds.length > 0) params.with_companies = compIds.join(sep);
+            } else {
+              const compIds = state.selectedStudios.filter((s) => s.companyId).map((s) => s.companyId);
+              if (compIds.length > 0) params.with_companies = compIds.join(sep);
+            }
+          }
+
+          // 08. Release Era & Year From/To
+          if (state.yearFrom) {
+            params[isTv ? 'first_air_date.gte' : 'primary_release_date.gte'] = `${state.yearFrom}-01-01`;
+          }
+          if (state.yearTo) {
+            params[isTv ? 'first_air_date.lte' : 'primary_release_date.lte'] = `${state.yearTo}-12-31`;
+          }
+
+          // 10. Runtime & More Filters
+          if (state.runtimeMin) params['with_runtime.gte'] = state.runtimeMin;
+          if (state.runtimeMax) params['with_runtime.lte'] = state.runtimeMax;
+
+          if (state.selectedProviders.length > 0) {
+            params.watch_region = state.watchRegion || 'IN';
+            params.with_watch_providers = state.selectedProviders.join('|');
+          }
+
+          if (state.certification) {
+            if (!isTv) {
+              params.certification_country = 'US';
+              params.certification = state.certification;
+            } else {
+              const certObj = CERTIFICATIONS.find((c) => c.id === state.certification);
+              if (certObj && certObj.tv) {
+                params.certification_country = 'US';
+                params.with_content_rating = certObj.tv;
+              }
+            }
+          }
+
+          const data = await tmdbFetch(`/discover/${mediumObj.endpoint}`, params);
+          const normalized = (data.results || []).map((raw) => normalizeMediaItem(raw, mediumObj.endpoint, mediumObj.id));
+
+          state.totalPages = Math.min(data.total_pages || 1, 500);
+          if (resetPage) {
+            state.results = normalized;
+          } else {
+            const seen = new Set(state.results.map((r) => `${r.endpoint}:${r.id}`));
+            normalized.forEach((item) => {
+              if (!seen.has(`${item.endpoint}:${item.id}`)) state.results.push(item);
+            });
+          }
+
+          renderResults();
+        } catch (err) {
+          renderErrorState(err.message || 'Unable to fetch titles from TMDB.');
+        } finally {
+          state.isLoading = false;
+        }
+      }
+
+      async function executeTvPersonCreditsDiscovery() {
+        const mediumObj = getCurrentMediumObj();
+        const personSets = [];
+
+        for (const actor of state.selectedCasts) {
+          const data = await tmdbFetch(`/person/${actor.id}/tv_credits`);
+          const map = new Map();
+          (data.cast || []).forEach((s) => map.set(s.id, s));
+          personSets.push({ mode: state.castLogic, map });
+        }
+
+        for (const dir of state.selectedDirectors) {
+          const data = await tmdbFetch(`/person/${dir.id}/tv_credits`);
+          const map = new Map();
+          const crew = (data.crew || []).filter((c) =>
+            ['Director', 'Creator', 'Executive Producer', 'Showrunner', 'Writer'].includes(c.job)
+          );
+          (crew.length > 0 ? crew : data.crew || []).forEach((s) => map.set(s.id, s));
+          personSets.push({ mode: state.directorLogic, map });
+        }
+
+        let merged = new Map();
+        personSets.forEach((entry, idx) => {
+          if (idx === 0) {
+            entry.map.forEach((v, k) => merged.set(k, v));
+          } else if (entry.mode === 'AND') {
+            const next = new Map();
+            merged.forEach((v, k) => {
+              if (entry.map.has(k)) next.set(k, v);
+            });
+            merged = next;
+          } else {
+            entry.map.forEach((v, k) => {
+              if (!merged.has(k)) merged.set(k, v);
+            });
+          }
+        });
+
+        const items = Array.from(merged.values()).filter((show) => {
+          if (mediumObj.tvGenre && !(show.genre_ids || []).includes(mediumObj.tvGenre)) return false;
+          if (state.selectedGenres.length > 0) {
+            const gIds = show.genre_ids || [];
+            if (state.genreLogic === 'AND') {
+              if (!state.selectedGenres.every((g) => gIds.includes(g))) return false;
+            } else {
+              if (!state.selectedGenres.some((g) => gIds.includes(g))) return false;
+            }
+          }
+          if (Number(state.minRating) > 0 && (show.vote_average || 0) < Number(state.minRating)) return false;
+          if (Number(state.minVotes) > 0 && (show.vote_count || 0) < Number(state.minVotes)) return false;
+          if (state.language && show.original_language !== state.language) return false;
+          const yr = parseInt((show.first_air_date || '').slice(0, 4), 10);
+          if (state.yearFrom && (!yr || yr < Number(state.yearFrom))) return false;
+          if (state.yearTo && (!yr || yr > Number(state.yearTo))) return false;
+          return true;
+        });
+
+        items.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+        state.results = items.map((raw) => normalizeMediaItem(raw, 'tv', mediumObj.id));
+        state.totalPages = 1;
+        renderResults();
+      }
+
+      async function executeHeroSearch(resetPage) {
+        const data = await tmdbFetch('/search/multi', {
+          query: state.searchQuery.trim(),
+          page: state.page,
+          include_adult: false
+        });
+
+        const items = [];
+        for (const raw of data.results || []) {
+          if (raw.media_type === 'movie' || raw.media_type === 'tv') {
+            items.push(normalizeMediaItem(raw, raw.media_type, detectFormatTag(raw, raw.media_type)));
+          } else if (raw.media_type === 'person' && Array.isArray(raw.known_for)) {
+            for (const kf of raw.known_for) {
+              if (kf.media_type === 'movie' || kf.media_type === 'tv') {
+                items.push(normalizeMediaItem(kf, kf.media_type, detectFormatTag(kf, kf.media_type)));
+              }
+            }
+          }
+        }
+
+        const deduped = [];
+        const seen = new Set(resetPage ? [] : state.results.map((r) => `${r.endpoint}:${r.id}`));
+        for (const item of items) {
+          const key = `${item.endpoint}:${item.id}`;
+          if (!seen.has(key)) {
+            seen.add(key);
+            deduped.push(item);
+          }
+        }
+
+        state.totalPages = Math.min(data.total_pages || 1, 500);
+        state.results = resetPage ? deduped : [...state.results, ...deduped];
+        renderResults();
+      }
+
+      function detectFormatTag(raw, endpoint) {
+        if (endpoint === 'movie') return 'movie';
+        const gIds = raw.genre_ids || [];
+        if (gIds.includes(10764)) return 'reality';
+        if (gIds.includes(10767)) return 'talk';
+        if (gIds.includes(99)) return 'docuseries';
+        return 'tv';
+      }
+
+      function computeMatchScore(raw) {
+        const vote = typeof raw.vote_average === 'number' ? raw.vote_average : 7.0;
+        const popBonus = Math.min(8, Math.log10((raw.popularity || 10) + 1) * 2.5);
+        const activeFilterBonus =
+          (state.selectedGenres.length > 0 ? 3 : 0) +
+          (state.selectedMoods.length > 0 ? 4 : 0) +
+          (state.selectedCasts.length > 0 || state.selectedDirectors.length > 0 ? 4 : 0);
+        const rawPct = Math.round(Math.min(99, Math.max(68, vote * 9.6 + popBonus + activeFilterBonus)));
+        return rawPct;
+      }
+
+      function normalizeMediaItem(raw, endpoint, formatId) {
+        const title = raw.title || raw.name || 'Untitled';
+        const dateStr = raw.release_date || raw.first_air_date || '';
+        const year = dateStr ? dateStr.slice(0, 4) : 'TBA';
+        const formatLabels = {
+          movie: 'Movie',
+          tv: 'TV Series',
+          reality: 'Reality',
+          miniseries: 'Miniseries',
+          docuseries: 'Docuseries',
+          talk: 'Talk & Variety'
+        };
+
+        return {
+          id: raw.id,
+          endpoint,
+          formatId: formatId || endpoint,
+          formatLabel: formatLabels[formatId] || (endpoint === 'movie' ? 'Movie' : 'TV Series'),
+          title,
+          year,
+          rating: typeof raw.vote_average === 'number' ? raw.vote_average.toFixed(1) : 'N/A',
+          matchScore: computeMatchScore(raw),
+          voteCount: raw.vote_count || 0,
+          overview: raw.overview || 'No synopsis available yet for this title.',
+          posterPath: raw.poster_path || null,
+          backdropPath: raw.backdrop_path || null,
+          language: (raw.original_language || '').toUpperCase()
+        };
+      }
+
+      /* ------------------------------------------------------------------------
+         7. RENDERING RESULTS GRID & INTERACTIVE POSTER CARDS
+         ------------------------------------------------------------------------ */
+      function renderSkeletons(resetPage) {
+        const grid = document.getElementById('resultsGrid');
+        document.getElementById('emptyStateBox').classList.add('hidden');
+        if (!resetPage) return;
+
+        const isEditorial = prefs.layout === 'editorial';
+        const count = isEditorial ? 6 : 8;
+        grid.innerHTML = Array.from({ length: count })
+          .map(
+            () => `
+            <div class="cinema-card">
+              <div class="skeleton ${isEditorial ? 'aspect-video' : 'aspect-[2/3]'} w-full"></div>
+              <div class="p-3.5 space-y-2">
+                <div class="skeleton h-4 w-3/4 rounded"></div>
+                <div class="skeleton h-3 w-1/2 rounded"></div>
+              </div>
+            </div>
+          `
+          )
+          .join('');
+      }
+
+      function renderResults() {
+        const grid = document.getElementById('resultsGrid');
+        const emptyBox = document.getElementById('emptyStateBox');
+        const loadMoreWrap = document.getElementById('loadMoreWrapper');
+        const pageIndicator = document.getElementById('pageIndicatorText');
+
+        if (state.results.length === 0) {
+          grid.innerHTML = '';
+          emptyBox.classList.remove('hidden');
+          loadMoreWrap.classList.add('hidden');
+          return;
+        }
+
+        emptyBox.classList.add('hidden');
+        const watchlistKeys = new Set(watchlist.map((w) => `${w.endpoint}:${w.id}`));
+        const isEditorial = prefs.layout === 'editorial';
+
+        grid.innerHTML = state.results
+          .map((item, idx) => {
+            const inWatchlist = watchlistKeys.has(`${item.endpoint}:${item.id}`);
+            const fallbackPoster = `https://placehold.co/500x750/0F172A/D4AF37?text=${encodeURIComponent(item.title)}`;
+            const fallbackWide = `https://placehold.co/780x439/0F172A/D4AF37?text=${encodeURIComponent(item.title)}`;
+
+            if (isEditorial) {
+              const wideSrc = item.backdropPath
+                ? `${IMG_BACKDROP}${item.backdropPath}`
+                : item.posterPath
+                ? `${IMG_POSTER}${item.posterPath}`
+                : fallbackWide;
+
+              return `
+                <article class="cinema-card group flex flex-col cursor-pointer" data-card-index="${idx}" data-open-detail="${item.endpoint}:${item.id}">
+                  <div class="relative aspect-video w-full overflow-hidden bg-black/40">
+                    <img src="${wideSrc}" alt="${escapeHTML(item.title)}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackWide}';" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+
+                    <!-- Top Left: Match Score + Medium Badge -->
+                    <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                      <span class="px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded backdrop-blur-md" style="background-color: var(--accent); color: var(--accent-contrast);">
+                        ${item.matchScore}% Match
+                      </span>
+                      <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded bg-black/75 text-white border border-white/15">
+                        ${escapeHTML(item.formatLabel)}
+                      </span>
+                    </div>
+
+                    <!-- Top Right: Quick Watchlist Toggle -->
+                    <button
+                      type="button"
+                      data-toggle-watchlist="${item.endpoint}:${item.id}"
+                      class="absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full text-[11px] font-bold backdrop-blur-md border transition hover:scale-105"
+                      style="background-color: ${inWatchlist ? 'var(--accent)' : 'rgba(15, 23, 42, 0.8)'}; color: ${inWatchlist ? 'var(--accent-contrast)' : '#FFFFFF'}; border-color: var(--accent-border);"
+                    >
+                      ${inWatchlist ? '✓ Saved' : '+ Watchlist'}
+                    </button>
+
+                    <!-- Bottom Title & Quick Trailer Button -->
+                    <div class="absolute bottom-3 left-3.5 right-3.5 flex items-end justify-between gap-2">
+                      <div class="min-w-0">
+                        <h3 class="font-editorial text-lg sm:text-xl font-bold text-white line-clamp-1">${escapeHTML(item.title)}</h3>
+                        <p class="text-[11px] text-white/80 font-medium">${escapeHTML(item.year)} · ★ ${item.rating} · ${escapeHTML(item.language)}</p>
+                      </div>
+                      <button
+                        type="button"
+                        data-open-trailer="${item.endpoint}:${item.id}"
+                        class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold bg-white/95 text-slate-950 hover:bg-white transition shadow-lg"
+                      >
+                        ▶ Trailer
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="p-4 flex-1 flex flex-col justify-between gap-2.5">
+                    <p class="text-xs leading-relaxed line-clamp-2" style="color: var(--text-secondary);">
+                      ${escapeHTML(item.overview)}
+                    </p>
+                  </div>
+                </article>
+              `;
+            }
+
+            // Standard & Compact Vault 2:3 Poster Card with Hover Synopsis & Quick Actions
+            const posterSrc = item.posterPath ? `${IMG_POSTER}${item.posterPath}` : fallbackPoster;
+
+            return `
+              <article class="cinema-card group flex flex-col cursor-pointer" data-card-index="${idx}" data-open-detail="${item.endpoint}:${item.id}">
+                <div class="relative aspect-[2/3] w-full overflow-hidden bg-black/40">
+                  <img src="${posterSrc}" alt="${escapeHTML(item.title)}" loading="lazy" onerror="this.onerror=null;this.src='${fallbackPoster}';" class="w-full h-full object-cover" />
+                  <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                  <!-- Top Left: Match Score Badge -->
+                  <span class="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider rounded backdrop-blur-md shadow" style="background-color: var(--accent); color: var(--accent-contrast);">
+                    ${item.matchScore}% Match
+                  </span>
+
+                  <!-- Top Right: Quick + Watchlist Toggle -->
+                  <button
+                    type="button"
+                    data-toggle-watchlist="${item.endpoint}:${item.id}"
+                    class="absolute top-2 right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold backdrop-blur-md border transition hover:scale-110 shadow"
+                    style="background-color: ${inWatchlist ? 'var(--accent)' : 'rgba(15, 23, 42, 0.82)'}; color: ${inWatchlist ? 'var(--accent-contrast)' : '#FFFFFF'}; border-color: var(--accent-border);"
+                    title="${inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}"
+                  >
+                    ${inWatchlist ? '✓' : '+'}
+                  </button>
+
+                  <!-- Hover Synopsis & Quick Trailer Overlay -->
+                  <div class="card-hover-overlay absolute inset-0 p-3 flex flex-col justify-end bg-gradient-to-t from-black/95 via-black/80 to-black/35">
+                    <p class="text-[11px] text-white/90 line-clamp-4 leading-relaxed mb-2.5">
+                      ${escapeHTML(item.overview)}
+                    </p>
+                    <div class="flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        data-open-trailer="${item.endpoint}:${item.id}"
+                        class="flex-1 py-1.5 px-2.5 rounded-lg text-[11px] font-bold bg-white text-slate-950 hover:bg-white/90 transition text-center"
+                      >
+                        ▶ Trailer
+                      </button>
+                      <button
+                        type="button"
+                        data-toggle-watchlist="${item.endpoint}:${item.id}"
+                        class="py-1.5 px-2.5 rounded-lg text-[11px] font-bold border text-white"
+                        style="background-color: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28);"
+                      >
+                        ${inWatchlist ? '✓ Saved' : '+ List'}
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Bottom Pills (Visible when not hovered) -->
+                  <div class="group-hover:opacity-0 transition-opacity duration-200 absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[11px] font-bold text-white">
+                    <span class="px-1.5 py-0.5 rounded bg-black/75 border border-white/15">
+                      ★ ${item.rating}
+                    </span>
+                    <span class="px-1.5 py-0.5 rounded bg-black/75 border border-white/15">
+                      ${escapeHTML(item.formatLabel)}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="p-3 flex-1 flex flex-col justify-between gap-1">
+                  <h3 class="font-semibold text-xs sm:text-sm line-clamp-2 leading-snug group-hover:underline" style="color: var(--text-primary);">
+                    ${escapeHTML(item.title)}
+                  </h3>
+                  <div class="flex items-center justify-between text-[11px]" style="color: var(--text-muted);">
+                    <span>${escapeHTML(item.year)} · ${escapeHTML(item.language)}</span>
+                    <span>${item.voteCount.toLocaleString()} votes</span>
+                  </div>
+                </div>
+              </article>
+            `;
+          })
+          .join('');
+
+        if (state.page < state.totalPages) {
+          loadMoreWrap.classList.remove('hidden');
+          pageIndicator.textContent = `(Page ${state.page} of ${state.totalPages})`;
+        } else {
+          loadMoreWrap.classList.add('hidden');
+        }
+      }
+
+      function renderErrorState(msg) {
+        const grid = document.getElementById('resultsGrid');
+        const emptyBox = document.getElementById('emptyStateBox');
+        grid.innerHTML = '';
+        emptyBox.classList.remove('hidden');
+        document.getElementById('loadMoreWrapper').classList.add('hidden');
+        document.getElementById('emptyStateTitle').textContent = 'Metadata Connection Notice';
+        document.getElementById('emptyStateMessage').textContent = msg;
+      }
+
+      function updateActiveSummaryUI() {
+        const mediumObj = getCurrentMediumObj();
+        const heading = document.getElementById('resultsHeading');
+        const badges = document.getElementById('activeQuickBadges');
+        const studioLabel = document.getElementById('studioActiveCountLabel');
+
+        if (state.searchQuery.trim()) {
+          heading.textContent = `Search Results for “${state.searchQuery.trim()}”`;
+        } else {
+          heading.textContent = `Curated ${mediumObj.label.replace(/^[^\w]+/, '')}`;
+        }
+
+        const tags = [];
+        if (state.visualStyle !== 'all') {
+          const vs = VISUAL_STYLES.find((v) => v.id === state.visualStyle);
+          if (vs) tags.push(vs.label);
+        }
+        if (state.selectedGenres.length > 0) tags.push(`${state.selectedGenres.length} Genre(s) [${state.genreLogic}]`);
+        const totalMoods = state.selectedMoods.length + state.customKeywords.length;
+        if (totalMoods > 0) tags.push(`${totalMoods} Mood/Trope(s) [${state.moodLogic}]`);
+        if (Number(state.minRating) > 0) tags.push(`★ ${state.minRating}+`);
+        if (state.language) {
+          const l = LANGUAGES.find((lang) => lang.code === state.language);
+          if (l) tags.push(l.name.split(' ')[0]);
+        }
+        if (state.selectedCasts.length > 0) tags.push(`${state.selectedCasts.length} Cast [${state.castLogic}]`);
+        if (state.selectedDirectors.length > 0) tags.push(`${state.selectedDirectors.length} Director(s) [${state.directorLogic}]`);
+        if (state.selectedStudios.length > 0) tags.push(`${state.selectedStudios.length} Studio(s) [${state.studioLogic}]`);
+        if (state.yearFrom || state.yearTo) tags.push(`${state.yearFrom || '…'}–${state.yearTo || 'Now'}`);
+        if (state.selectedAwards.length > 0) tags.push(`${state.selectedAwards.length} Award(s)`);
+        if (state.runtimeMin || state.runtimeMax) tags.push(`${state.runtimeMin || '0'}–${state.runtimeMax || '∞'}m`);
+        if (state.selectedProviders.length > 0) tags.push(`${state.selectedProviders.length} Streamer(s) (${state.watchRegion})`);
+
+        studioLabel.textContent = tags.length > 0 ? `${tags.length} active filter(s)` : '10 precision dimensions';
+
+        badges.innerHTML = tags
+          .map(
+            (t) => `
+            <span class="px-2.5 py-1 text-[11px] font-semibold border" style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);">
+              ${escapeHTML(t)}
+            </span>
+          `
+          )
+          .join('');
+      }
+
+      /* ------------------------------------------------------------------------
+         8. SCREENING ROOM DETAIL MODAL (ERROR-153-SAFE YOUTUBE, STREAM/RENT/BUY, MORE LIKE THIS)
+         ------------------------------------------------------------------------ */
+      async function openDetailModal(endpoint, id, scrollToTrailer = false) {
+        const modal = document.getElementById('detailModal');
+        const content = document.getElementById('detailModalContent');
+        modal.classList.remove('hidden');
+
+        content.innerHTML = `
+          <div class="p-14 text-center space-y-3">
+            <div class="inline-block w-9 h-9 border-2 rounded-full animate-spin" style="border-color: var(--accent); border-top-color: transparent;"></div>
+            <p class="text-sm font-medium" style="color: var(--text-secondary);">Opening Screening Room...</p>
+          </div>
+        `;
+
+        try {
+          const data = await tmdbFetch(`/${endpoint}/${id}`, {
+            append_to_response: 'credits,videos,watch/providers,recommendations'
+          });
+
+          const title = data.title || data.name || 'Untitled';
+          const tagline = data.tagline || '';
+          const releaseDate = data.release_date || data.first_air_date || '';
+          const year = releaseDate ? releaseDate.slice(0, 4) : 'TBA';
+          const runtime =
+            endpoint === 'movie'
+              ? data.runtime
+                ? `${data.runtime} min`
+                : 'N/A'
+              : Array.isArray(data.episode_run_time) && data.episode_run_time[0]
+              ? `${data.episode_run_time[0]}m / ep · ${data.number_of_seasons || 1} Season(s)`
+              : `${data.number_of_seasons || 1} Season(s)`;
+
+          const rating = typeof data.vote_average === 'number' ? data.vote_average.toFixed(1) : 'N/A';
+          const backdropUrl = data.backdrop_path
+            ? `${IMG_BACKDROP}${data.backdrop_path}`
+            : data.poster_path
+            ? `${IMG_POSTER}${data.poster_path}`
+            : `https://placehold.co/1280x720/0F172A/D4AF37?text=${encodeURIComponent(title)}`;
+          const posterUrl = data.poster_path
+            ? `${IMG_POSTER}${data.poster_path}`
+            : `https://placehold.co/300x450/0F172A/D4AF37?text=${encodeURIComponent(title.slice(0, 4))}`;
+
+          // Official YouTube Trailer / Teaser selection
+          const videos = (data.videos && data.videos.results) || [];
+          const trailer =
+            videos.find((v) => v.site === 'YouTube' && v.type === 'Trailer' && v.official) ||
+            videos.find((v) => v.site === 'YouTube' && v.type === 'Trailer') ||
+            videos.find((v) => v.site === 'YouTube' && v.type === 'Teaser') ||
+            videos.find((v) => v.site === 'YouTube');
+
+          // Top Cast with Portraits
+          const castList = ((data.credits && data.credits.cast) || []).slice(0, 8);
+
+          // Directors / Creators
+          const directors =
+            endpoint === 'movie'
+              ? ((data.credits && data.credits.crew) || []).filter((c) => c.job === 'Director').slice(0, 4)
+              : (data.created_by && data.created_by.length > 0
+                  ? data.created_by
+                  : ((data.credits && data.credits.crew) || []).filter((c) => c.job === 'Director' || c.job === 'Executive Producer')
+                ).slice(0, 4);
+
+          // Where to Watch (Stream / Rent / Buy for Selected Region, default IN)
+          const regionKey = state.watchRegion || 'IN';
+          const regionProviders =
+            (data['watch/providers'] && data['watch/providers'].results && data['watch/providers'].results[regionKey]) ||
+            {};
+          const streamList = regionProviders.flatrate || [];
+          const rentList = regionProviders.rent || [];
+          const buyList = regionProviders.buy || [];
+
+          // More Like This Recommendations Strip
+          const recommendations = ((data.recommendations && data.recommendations.results) || []).slice(0, 10);
+
+          const inWatchlist = watchlist.some((w) => w.endpoint === endpoint && Number(w.id) === Number(id));
+          window.__currentDetailItem = normalizeMediaItem(data, endpoint, detectFormatTag(data, endpoint));
+
+          const renderProviderBadges = (list) =>
+            list
+              .map(
+                (p) => `
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-lg border" style="background-color: var(--bg-pill); border-color: var(--border-strong); color: var(--text-primary);">
+                  ${p.logo_path ? `<img src="${IMG_LOGO}${p.logo_path}" alt="" class="w-4 h-4 rounded object-cover" />` : ''}
+                  <span>${escapeHTML(p.provider_name)}</span>
+                </span>
+              `
+              )
+              .join('');
+
+          content.innerHTML = `
+            <div class="relative">
+              <!-- Close Button -->
+              <button type="button" id="closeDetailModalBtn" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full flex items-center justify-center font-bold border shadow-lg transition hover:scale-105" style="background-color: rgba(15, 23, 42, 0.88); border-color: var(--accent); color: #FFFFFF;">
+                ✕
+              </button>
+
+              <!-- Full-Bleed Backdrop + Poster Lockup -->
+              <div class="relative min-h-[260px] sm:min-h-[310px] w-full overflow-hidden bg-black flex items-end">
+                <img src="${backdropUrl}" alt="${escapeHTML(title)}" class="absolute inset-0 w-full h-full object-cover opacity-65" />
+                <div class="absolute inset-0 bg-gradient-to-t from-[var(--bg-card)] via-black/55 to-black/20"></div>
+
+                <div class="relative z-10 p-5 sm:p-7 flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6 w-full">
+                  <img src="${posterUrl}" alt="${escapeHTML(title)}" class="hidden sm:block w-28 md:w-32 aspect-[2/3] rounded-xl object-cover border-2 shadow-2xl shrink-0" style="border-color: var(--accent);" />
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                      <span class="px-2.5 py-0.5 text-xs font-extrabold rounded" style="background-color: var(--accent); color: var(--accent-contrast);">
+                        ★ ${rating} (${(data.vote_count || 0).toLocaleString()} votes)
+                      </span>
+                      <span class="px-2.5 py-0.5 text-xs font-semibold rounded bg-black/65 text-white border border-white/15">
+                        ${escapeHTML(year)} · ${escapeHTML(runtime)}
+                      </span>
+                      ${(data.genres || [])
+                        .map(
+                          (g) =>
+                            `<span class="px-2.5 py-0.5 text-xs rounded bg-black/65 text-white/90 border border-white/15">${escapeHTML(g.name)}</span>`
+                        )
+                        .join('')}
+                    </div>
+                    <h2 class="font-editorial text-2xl sm:text-4xl font-bold text-white leading-tight">
+                      ${escapeHTML(title)}
+                    </h2>
+                    ${tagline ? `<p class="text-xs sm:text-sm italic mt-1 text-white/80">“${escapeHTML(tagline)}”</p>` : ''}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal Body -->
+              <div class="p-5 sm:p-7 space-y-6">
+                <!-- Watchlist Action -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b" style="border-color: var(--border-subtle);">
+                  <button type="button" id="modalWatchlistToggleBtn" class="btn-accent px-5 py-2.5 text-xs sm:text-sm flex items-center gap-2">
+                    <span>${inWatchlist ? '✓ Saved in Would Watch That List' : '+ Add to Would Watch That List'}</span>
+                  </button>
+
+                  ${
+                    directors.length > 0
+                      ? `<div class="flex flex-wrap items-center gap-1.5">
+                          <span class="text-xs font-semibold" style="color: var(--text-muted);">Director / Creator:</span>
+                          ${directors
+                            .map(
+                              (d) => `
+                              <button type="button" data-filter-director-id="${d.id}" data-filter-director-name="${escapeHTML(d.name)}" class="filter-pill px-3 py-1 text-xs font-semibold">
+                                🎬 ${escapeHTML(d.name)}
+                              </button>
+                            `
+                            )
+                            .join('')}
+                        </div>`
+                      : ''
+                  }
+                </div>
+
+                <!-- Synopsis -->
+                <div class="space-y-1.5">
+                  <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">Synopsis</h3>
+                  <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                    ${escapeHTML(data.overview || 'No synopsis available.')}
+                  </p>
+                </div>
+
+                <!-- YouTube Trailer Section (Error 153 Protected + Prominent External Fallback) -->
+                <div id="modalTrailerSection" class="space-y-2.5">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                      Official Trailer
+                    </h3>
+                    ${
+                      trailer
+                        ? `<a
+                            href="https://www.youtube.com/watch?v=${encodeURIComponent(trailer.key)}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="px-3.5 py-1.5 text-xs font-bold border transition hover:opacity-85"
+                            style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);"
+                          >
+                            Open Trailer on YouTube ↗
+                          </a>`
+                        : `<a
+                            href="https://www.youtube.com/results?search_query=${encodeURIComponent(`${title} ${year} official trailer`)}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="px-3.5 py-1.5 text-xs font-bold border transition hover:opacity-85"
+                            style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);"
+                          >
+                            Search Trailer on YouTube ↗
+                          </a>`
+                    }
+                  </div>
+
+                  ${
+                    trailer
+                      ? `<div class="aspect-video w-full overflow-hidden border bg-black" style="border-color: var(--border-strong); border-radius: var(--radius-input);">
+                          <iframe
+                            class="w-full h-full"
+                            src="https://www.youtube.com/embed/${encodeURIComponent(trailer.key)}?rel=0&modestbranding=1&playsinline=1"
+                            title="${escapeHTML(title)} Official Trailer"
+                            frameborder="0"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                          ></iframe>
+                        </div>`
+                      : `<div class="p-4 rounded-xl border text-xs" style="background-color: var(--bg-input); border-color: var(--border-subtle); color: var(--text-muted);">
+                          No embedded YouTube video key returned by TMDB for this title. Click <strong>Open Trailer on YouTube ↗</strong> above to watch directly.
+                        </div>`
+                  }
+                </div>
+
+                <!-- Where to Watch (Stream, Rent & Buy for Selected Region) -->
+                <div class="p-4 rounded-xl border space-y-3" style="background-color: var(--bg-input); border-color: var(--border-subtle);">
+                  <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                    Where to Watch (${regionKey})
+                  </h3>
+                  ${
+                    streamList.length === 0 && rentList.length === 0 && buyList.length === 0
+                      ? `<p class="text-xs" style="color: var(--text-muted);">No direct streaming, rent, or buy listings reported for region <strong>${regionKey}</strong>.</p>`
+                      : `<div class="space-y-2.5">
+                          ${
+                            streamList.length > 0
+                              ? `<div class="flex flex-wrap items-center gap-2">
+                                  <span class="text-[11px] font-bold uppercase w-14" style="color: var(--text-muted);">Stream:</span>
+                                  ${renderProviderBadges(streamList)}
+                                </div>`
+                              : ''
+                          }
+                          ${
+                            rentList.length > 0
+                              ? `<div class="flex flex-wrap items-center gap-2">
+                                  <span class="text-[11px] font-bold uppercase w-14" style="color: var(--text-muted);">Rent:</span>
+                                  ${renderProviderBadges(rentList)}
+                                </div>`
+                              : ''
+                          }
+                          ${
+                            buyList.length > 0
+                              ? `<div class="flex flex-wrap items-center gap-2">
+                                  <span class="text-[11px] font-bold uppercase w-14" style="color: var(--text-muted);">Buy:</span>
+                                  ${renderProviderBadges(buyList)}
+                                </div>`
+                              : ''
+                          }
+                        </div>`
+                  }
+                </div>
+
+                <!-- Top Cast (Interactive Click-to-Filter) -->
+                ${
+                  castList.length > 0
+                    ? `<div class="space-y-2.5">
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                          Top Cast <span class="text-[10px] font-normal normal-case" style="color: var(--text-muted);">(Click any actor to filter by them)</span>
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                          ${castList
+                            .map((actor) => {
+                              const headshot = actor.profile_path
+                                ? `${IMG_HEADSHOT}${actor.profile_path}`
+                                : `https://placehold.co/120x120/1E293B/D4AF37?text=${encodeURIComponent(actor.name.slice(0, 2))}`;
+                              return `
+                                <button
+                                  type="button"
+                                  data-filter-cast-id="${actor.id}"
+                                  data-filter-cast-name="${escapeHTML(actor.name)}"
+                                  data-filter-cast-photo="${actor.profile_path || ''}"
+                                  class="flex items-center gap-2.5 p-2 rounded-xl border text-left transition hover:border-[var(--accent)]"
+                                  style="background-color: var(--bg-input); border-color: var(--border-subtle);"
+                                >
+                                  <img src="${headshot}" alt="${escapeHTML(actor.name)}" class="w-10 h-10 rounded-full object-cover shrink-0" />
+                                  <div class="min-w-0">
+                                    <p class="text-xs font-bold truncate" style="color: var(--text-primary);">${escapeHTML(actor.name)}</p>
+                                    <p class="text-[10px] truncate" style="color: var(--text-muted);">${escapeHTML(actor.character || '')}</p>
+                                  </div>
+                                </button>
+                              `;
+                            })
+                            .join('')}
+                        </div>
+                      </div>`
+                    : ''
+                }
+
+                <!-- More Like This Horizontal Scroll Strip -->
+                ${
+                  recommendations.length > 0
+                    ? `<div class="space-y-2.5 pt-2 border-t" style="border-color: var(--border-subtle);">
+                        <h3 class="text-xs font-bold uppercase tracking-widest" style="color: var(--accent);">
+                          More Like This
+                        </h3>
+                        <div class="flex gap-3 overflow-x-auto pb-2">
+                          ${recommendations
+                            .map((rec) => {
+                              const recTitle = rec.title || rec.name || 'Untitled';
+                              const recPoster = rec.poster_path
+                                ? `${IMG_HEADSHOT}${rec.poster_path}`
+                                : `https://placehold.co/185x278/0F172A/D4AF37?text=${encodeURIComponent(recTitle.slice(0, 4))}`;
+                              const recRating = typeof rec.vote_average === 'number' ? rec.vote_average.toFixed(1) : 'N/A';
+                              return `
+                                <button
+                                  type="button"
+                                  data-open-rec="${endpoint}:${rec.id}"
+                                  class="w-28 sm:w-32 shrink-0 text-left group space-y-1.5"
+                                >
+                                  <div class="aspect-[2/3] w-full rounded-xl overflow-hidden border transition group-hover:border-[var(--accent)]" style="border-color: var(--border-subtle);">
+                                    <img src="${recPoster}" alt="${escapeHTML(recTitle)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                  </div>
+                                  <p class="text-xs font-semibold line-clamp-1 group-hover:underline" style="color: var(--text-primary);">${escapeHTML(recTitle)}</p>
+                                  <p class="text-[10px]" style="color: var(--text-muted);">★ ${recRating}</p>
+                                </button>
+                              `;
+                            })
+                            .join('')}
+                        </div>
+                      </div>`
+                    : ''
+                }
+              </div>
+            </div>
+          `;
+
+          if (scrollToTrailer) {
+            setTimeout(() => {
+              const sec = document.getElementById('modalTrailerSection');
+              if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 120);
+          }
+        } catch (err) {
+          content.innerHTML = `
+            <div class="p-8 text-center space-y-4">
+              <p class="text-sm" style="color: var(--text-secondary);">Unable to load Screening Room details right now.</p>
+              <button type="button" id="closeDetailModalBtn" class="btn-accent px-5 py-2 text-xs">Close</button>
+            </div>
+          `;
+        }
+      }
+
+      function closeDetailModal() {
+        const modal = document.getElementById('detailModal');
+        const content = document.getElementById('detailModalContent');
+        modal.classList.add('hidden');
+        content.innerHTML = ''; // Immediately stops trailer audio
+      }
+
+      /* ------------------------------------------------------------------------
+         9. PERSISTENT WATCHLIST MANAGEMENT
+         ------------------------------------------------------------------------ */
+      function toggleWatchlistItem(item) {
+        const idx = watchlist.findIndex((w) => w.endpoint === item.endpoint && Number(w.id) === Number(item.id));
+        if (idx >= 0) {
+          watchlist.splice(idx, 1);
+          showToast(`Removed “${item.title}” from Watchlist`);
+        } else {
+          watchlist.unshift(item);
+          showToast(`Saved “${item.title}” to Watchlist`);
+        }
+        saveJSON(STORAGE_KEYS.WATCHLIST, watchlist);
+        updateWatchlistUI();
+        renderResults();
+      }
+
+      function updateWatchlistUI() {
+        const badge = document.getElementById('watchlistCountBadge');
+        const subtitle = document.getElementById('watchlistDrawerSubtitle');
+        const container = document.getElementById('watchlistItemsContainer');
+
+        badge.textContent = watchlist.length;
+        subtitle.textContent = `${watchlist.length} saved title${watchlist.length === 1 ? '' : 's'}`;
+
+        const filtered = watchlist.filter((w) => {
+          if (state.watchlistTab === 'movie') return w.endpoint === 'movie';
+          if (state.watchlistTab === 'tv') return w.endpoint === 'tv';
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-14 px-4 space-y-2">
+              <div class="text-3xl">🔖</div>
+              <p class="font-semibold text-sm" style="color: var(--text-primary);">No Saved Titles Here</p>
+              <p class="text-xs" style="color: var(--text-muted);">Click <strong>+</strong> on any movie, series, or reality show to save it to your Would Watch That list.</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = filtered
+          .map((item) => {
+            const thumb = item.posterPath
+              ? `${IMG_HEADSHOT}${item.posterPath}`
+              : `https://placehold.co/120x180/0F172A/D4AF37?text=${encodeURIComponent(item.title.slice(0, 3))}`;
+            return `
+              <div class="flex items-center gap-3 p-2.5 rounded-xl border" style="background-color: var(--bg-input); border-color: var(--border-subtle);">
+                <img src="${thumb}" alt="${escapeHTML(item.title)}" class="w-12 h-16 rounded-lg object-cover shrink-0 cursor-pointer" data-open-detail="${item.endpoint}:${item.id}" />
+                <div class="flex-1 min-w-0 cursor-pointer" data-open-detail="${item.endpoint}:${item.id}">
+                  <span class="inline-block px-1.5 py-0.5 text-[10px] font-bold uppercase rounded mb-0.5" style="background-color: var(--accent-soft); color: var(--accent);">
+                    ${escapeHTML(item.formatLabel)}
+                  </span>
+                  <h4 class="text-xs sm:text-sm font-bold truncate" style="color: var(--text-primary);">${escapeHTML(item.title)}</h4>
+                  <p class="text-[11px]" style="color: var(--text-muted);">${escapeHTML(item.year)} · ★ ${escapeHTML(item.rating)}</p>
+                </div>
+                <button
+                  type="button"
+                  data-remove-watchlist="${item.endpoint}:${item.id}"
+                  class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border hover:opacity-80"
+                  style="background-color: var(--bg-pill); border-color: var(--border-strong); color: var(--text-secondary);"
+                  title="Remove from list"
+                >
+                  ✕
+                </button>
+              </div>
+            `;
+          })
+          .join('');
+      }
+
+      /* ------------------------------------------------------------------------
+         10. RENDERING ALL 10 FILTER STUDIO SECTIONS
+         ------------------------------------------------------------------------ */
+      function renderContentMediums() {
+        document.getElementById('contentMediumContainer').innerHTML = CONTENT_MEDIUMS.map(
+          (m) => `
+          <button type="button" data-medium-id="${m.id}" class="filter-pill px-3 py-1.5 text-xs font-semibold ${state.medium === m.id ? 'active' : ''}">
+            ${m.label}
+          </button>
+        `
+        ).join('');
+      }
+
+      function renderVisualStyles() {
+        document.getElementById('visualStyleContainer').innerHTML = VISUAL_STYLES.map(
+          (vs) => `
+          <button type="button" data-style-id="${vs.id}" class="filter-pill px-2.5 py-1 text-[11px] ${state.visualStyle === vs.id ? 'active' : ''}">
+            ${vs.label}
+          </button>
+        `
+        ).join('');
+      }
+
+      function renderGenrePills(genres) {
+        document.getElementById('genreContainer').innerHTML = genres
+          .map((g) => {
+            const emoji = GENRE_EMOJIS[g.id] || '🎬';
+            const active = state.selectedGenres.includes(g.id);
+            return `
+              <button type="button" data-genre-id="${g.id}" class="filter-pill px-2.5 py-1 text-xs ${active ? 'active' : ''}">
+                ${emoji} ${escapeHTML(g.name)}
+              </button>
+            `;
+          })
+          .join('');
+      }
+
+      function renderMoodsAndTropes() {
+        const filtered = MOODS_TROPES_CATALOG.filter(
+          (m) => state.moodCategory === 'all' || m.cat === state.moodCategory
+        );
+
+        document.getElementById('moodsTropesContainer').innerHTML = filtered
+          .map((m) => {
+            const active = state.selectedMoods.includes(m.id);
+            return `
+              <button type="button" data-mood-id="${m.id}" class="filter-pill px-2.5 py-1 text-[11px] ${active ? 'active' : ''}">
+                ${escapeHTML(m.label)}
+              </button>
+            `;
+          })
+          .join('');
+
+        // Render custom keyword chips
+        document.getElementById('selectedCustomKeywordsChips').innerHTML = state.customKeywords
+          .map(
+            (kw) => `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-bold border" style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);">
+              <span>🏷️ ${escapeHTML(kw.name)}</span>
+              <button type="button" data-remove-custom-kw="${kw.id}" class="hover:opacity-75">✕</button>
+            </span>
+          `
+          )
+          .join('');
+      }
+
+      function renderLanguageDropdown(query = '') {
+        const list = document.getElementById('languageDropdownList');
+        const q = query.toLowerCase().trim();
+        const matches = LANGUAGES.filter(
+          (l) => l.name.toLowerCase().includes(q) || l.code.toLowerCase().includes(q)
+        );
+        list.innerHTML = matches
+          .map(
+            (l) => `
+            <button
+              type="button"
+              data-lang-code="${l.code}"
+              data-lang-name="${escapeHTML(l.name)}"
+              class="w-full text-left px-3 py-2 text-xs flex items-center justify-between border-b last:border-b-0 hover:opacity-85"
+              style="border-color: var(--border-subtle); background-color: ${state.language === l.code ? 'var(--accent-soft)' : 'transparent'}; color: ${state.language === l.code ? 'var(--accent)' : 'var(--text-primary)'};"
+            >
+              <span>${escapeHTML(l.name)}</span>
+              ${l.code ? `<span class="text-[10px] uppercase font-mono" style="color: var(--text-muted);">${l.code}</span>` : ''}
+            </button>
+          `
+          )
+          .join('');
+      }
+
+      function renderEntityChipsAndQuickPicks() {
+        // Selected Cast Chips
+        document.getElementById('selectedCastsChips').innerHTML = state.selectedCasts
+          .map(
+            (c) => `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold border" style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);">
+              <span>★ ${escapeHTML(c.name)}</span>
+              <button type="button" data-remove-cast="${c.id}">✕</button>
+            </span>
+          `
+          )
+          .join('');
+
+        // Selected Director Chips
+        document.getElementById('selectedDirectorsChips').innerHTML = state.selectedDirectors
+          .map(
+            (d) => `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold border" style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);">
+              <span>🎬 ${escapeHTML(d.name)}</span>
+              <button type="button" data-remove-director="${d.id}">✕</button>
+            </span>
+          `
+          )
+          .join('');
+
+        // Selected Studio Chips
+        document.getElementById('selectedStudiosChips').innerHTML = state.selectedStudios
+          .map(
+            (s) => `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold border" style="background-color: var(--accent-soft); border-color: var(--accent-border); border-radius: var(--radius-pill); color: var(--accent);">
+              <span>🏛️ ${escapeHTML(s.name)}</span>
+              <button type="button" data-remove-studio="${escapeHTML(s.name)}">✕</button>
+            </span>
+          `
+          )
+          .join('');
+
+        // Quick Picks
+        document.getElementById('castQuickPicksContainer').innerHTML = FAMOUS_CAST_PICKS.map((name) => {
+          const active = state.selectedCasts.some((c) => c.name.toLowerCase() === name.toLowerCase());
+          return `<button type="button" data-quick-cast="${escapeHTML(name)}" class="filter-pill px-2.5 py-1 text-[11px] ${active ? 'active' : ''}">${escapeHTML(name)}</button>`;
+        }).join('');
+
+        document.getElementById('directorQuickPicksContainer').innerHTML = FAMOUS_DIRECTOR_PICKS.map((name) => {
+          const active = state.selectedDirectors.some((d) => d.name.toLowerCase() === name.toLowerCase());
+          return `<button type="button" data-quick-director="${escapeHTML(name)}" class="filter-pill px-2.5 py-1 text-[11px] ${active ? 'active' : ''}">${escapeHTML(name)}</button>`;
+        }).join('');
+
+        document.getElementById('studioQuickPicksContainer').innerHTML = FAMOUS_STUDIO_PICKS.map((st) => {
+          const active = state.selectedStudios.some((s) => s.name.toLowerCase() === st.name.toLowerCase());
+          return `<button type="button" data-quick-studio="${escapeHTML(st.name)}" class="filter-pill px-2.5 py-1 text-[11px] ${active ? 'active' : ''}">${escapeHTML(st.name)}</button>`;
+        }).join('');
+      }
+
+      function renderErasAwardsAndMore() {
+        document.getElementById('eraPillsContainer').innerHTML = RELEASE_ERAS.map(
+          (era) => `
+          <button type="button" data-era-id="${era.id}" class="filter-pill px-2.5 py-1 text-[11px] ${state.era === era.id ? 'active' : ''}">
+            ${era.label}
+          </button>
+        `
+        ).join('');
+
+        document.getElementById('awardsContainer').innerHTML = AWARDS_CATALOG.map(
+          (aw) => `
+          <button type="button" data-award-id="${aw.id}" class="filter-pill px-2.5 py-1 text-[11px] ${state.selectedAwards.includes(aw.id) ? 'active' : ''}">
+            ${aw.label}
+          </button>
+        `
+        ).join('');
+
+        document.getElementById('runtimePresetsContainer').innerHTML = RUNTIME_PRESETS.map(
+          (rt) => `
+          <button type="button" data-runtime-id="${rt.id}" class="filter-pill px-2.5 py-1 text-[11px] ${state.runtimePreset === rt.id ? 'active' : ''}">
+            ${rt.label}
+          </button>
+        `
+        ).join('');
+
+        document.getElementById('streamingProvidersContainer').innerHTML = STREAMING_PLATFORMS.map(
+          (sp) => `
+          <button type="button" data-provider-id="${sp.id}" class="filter-pill px-2.5 py-1 text-[11px] ${state.selectedProviders.includes(sp.id) ? 'active' : ''}">
+            ${sp.label}
+          </button>
+        `
+        ).join('');
+
+        document.getElementById('certificationContainer').innerHTML = CERTIFICATIONS.map(
+          (c) => `
+          <button type="button" data-cert-id="${c.id}" class="filter-pill px-2.5 py-1 text-[11px] ${state.certification === c.id ? 'active' : ''}">
+            ${c.label}
+          </button>
+        `
+        ).join('');
+      }
+
+      /* ------------------------------------------------------------------------
+         11. SETTINGS MODAL RENDERING (4 THEMES, 12 ACCENTS, 3 LAYOUTS, 4 FONTS)
+         ------------------------------------------------------------------------ */
+      function renderSettingsModalOptions() {
+        // 1. 4 Color Themes
+        document.getElementById('themeSelectorGrid').innerHTML = THEMES.map((t) => {
+          const active = prefs.theme === t.id;
+          return `
+            <button
+              type="button"
+              data-select-theme="${t.id}"
+              class="p-3 rounded-xl border text-left flex items-center gap-3 transition"
+              style="background-color: var(--bg-input); border-color: ${active ? 'var(--accent)' : 'var(--border-subtle)'}; box-shadow: ${active ? '0 0 0 2px var(--accent-soft)' : 'none'};"
+            >
+              <span class="w-8 h-8 rounded-lg shrink-0 border flex items-center justify-center" style="background-color: ${t.bg}; border-color: rgba(255,255,255,0.28);">
+                <span class="w-3.5 h-3.5 rounded-full" style="background-color: ${t.card}; border: 1.5px solid var(--accent);"></span>
+              </span>
+              <div class="min-w-0">
+                <p class="text-xs font-bold truncate" style="color: var(--text-primary);">${t.name}</p>
+                <p class="text-[10px] truncate" style="color: var(--text-muted);">${t.desc}</p>
+              </div>
+            </button>
+          `;
+        }).join('');
+
+        // 2. 12 Accent Colours
+        document.getElementById('accentSwatchGrid').innerHTML = ACCENTS.map((a) => {
+          const active = prefs.accent === a.id;
+          return `
+            <button
+              type="button"
+              data-select-accent="${a.id}"
+              class="px-3 py-2 rounded-xl border text-xs font-semibold flex items-center gap-2 transition text-left"
+              style="background-color: var(--bg-input); border-color: ${active ? a.hex : 'var(--border-subtle)'}; box-shadow: ${active ? `0 0 0 2px ${a.hex}33` : 'none'}; color: var(--text-primary);"
+            >
+              <span class="w-3.5 h-3.5 rounded-full shrink-0" style="background-color: ${a.hex};"></span>
+              <span class="truncate">${a.name}</span>
+            </button>
+          `;
+        }).join('');
+
+        // 3. 3 Page Layout Styles
+        document.getElementById('pageStyleGrid').innerHTML = PAGE_LAYOUTS.map((pl) => {
+          const active = prefs.layout === pl.id;
+          return `
+            <button
+              type="button"
+              data-select-layout="${pl.id}"
+              class="p-3 rounded-xl border text-left transition"
+              style="background-color: var(--bg-input); border-color: ${active ? 'var(--accent)' : 'var(--border-subtle)'}; box-shadow: ${active ? '0 0 0 2px var(--accent-soft)' : 'none'};"
+            >
+              <p class="text-xs font-bold" style="color: var(--text-primary);">${pl.name}</p>
+              <p class="text-[10px] mt-0.5" style="color: var(--text-muted);">${pl.desc}</p>
+            </button>
+          `;
+        }).join('');
+
+        // 4. 4 Classic Font Pairings
+        document.getElementById('fontPairingGrid').innerHTML = FONT_PAIRINGS.map((fp) => {
+          const active = prefs.font === fp.id;
+          return `
+            <button
+              type="button"
+              data-select-font="${fp.id}"
+              class="p-3 rounded-xl border text-left transition"
+              style="background-color: var(--bg-input); border-color: ${active ? 'var(--accent)' : 'var(--border-subtle)'}; box-shadow: ${active ? '0 0 0 2px var(--accent-soft)' : 'none'};"
+            >
+              <p class="text-sm font-bold" style="font-family: ${fp.display}; color: var(--text-primary);">${fp.name}</p>
+              <p class="text-[10px] mt-0.5" style="color: var(--text-muted);">${fp.desc}</p>
+            </button>
+          `;
+        }).join('');
+
+        // 5. Immersive Glow Checkbox
+        document.getElementById('immersiveGlowToggle').checked = prefs.immersiveGlow !== false;
+
+        // 6. Hidden API Key Badge (Built-in key string is NEVER rendered in DOM)
+        const apiBadge = document.getElementById('apiKeyStatusBadge');
+        if (hasCustomKeyOverride()) {
+          apiBadge.textContent = 'Custom TMDB API Key Override Active';
+        } else {
+          apiBadge.textContent = 'Built-in Cinema Database Key Active (Hidden)';
+        }
+
+        // 7. Cache Count
+        const cachedCount =
+          Object.keys(cacheStore.keywords || {}).length +
+          Object.keys(cacheStore.persons || {}).length +
+          Object.keys(cacheStore.companies || {}).length;
+        document.getElementById('cachedItemsCountBadge').textContent = `${cachedCount} cached entries`;
+      }
+
+      /* ------------------------------------------------------------------------
+         12. EVENT WIRING
+         ------------------------------------------------------------------------ */
+      function bindEvents() {
+        // Brand Reset
+        document.getElementById('brandResetBtn').addEventListener('click', (e) => {
+          e.preventDefault();
+          resetAllFilters();
+        });
+
+        // Hero Search
+        const heroInput = document.getElementById('heroSearchInput');
+        const clearHeroBtn = document.getElementById('clearHeroSearchBtn');
+        const debouncedHero = debounce(() => {
+          state.searchQuery = heroInput.value;
+          executeDiscovery(true);
+        }, 380);
+
+        heroInput.addEventListener('input', () => {
+          clearHeroBtn.classList.toggle('hidden', heroInput.value.length === 0);
+          debouncedHero();
+        });
+
+        clearHeroBtn.addEventListener('click', () => {
+          heroInput.value = '';
+          state.searchQuery = '';
+          clearHeroBtn.classList.add('hidden');
+          executeDiscovery(true);
+        });
+
+        // Compact Surprise Me Button
+        document.getElementById('surpriseMeBtn').addEventListener('click', async () => {
+          if (state.results.length === 0) {
+            await executeDiscovery(true);
+          }
+          if (state.results.length > 0) {
+            const pick = state.results[Math.floor(Math.random() * state.results.length)];
+            showToast(`✨ Spotlight: ${pick.title}`);
+            openDetailModal(pick.endpoint, pick.id);
+          }
+        });
+
+        // Collapse / Expand Filter Studio
+        document.getElementById('toggleStudioCollapseBtn').addEventListener('click', (e) => {
+          state.studioCollapsed = !state.studioCollapsed;
+          document.getElementById('filterStudioBody').classList.toggle('hidden', state.studioCollapsed);
+          e.currentTarget.textContent = state.studioCollapsed ? 'Show ▼' : 'Hide ▲';
+        });
+
+        // Reset All Filters
+        document.getElementById('resetAllFiltersBtn').addEventListener('click', resetAllFilters);
+        document.getElementById('emptyResetBtn').addEventListener('click', resetAllFilters);
+
+        // 01. Content Medium & Visual Style
+        document.getElementById('contentMediumContainer').addEventListener('click', async (e) => {
+          const btn = e.target.closest('[data-medium-id]');
+          if (!btn) return;
+          state.medium = btn.dataset.mediumId;
+          state.selectedGenres = [];
+          renderContentMediums();
+          await loadGenresForCurrentMedium();
+          executeDiscovery(true);
+        });
+
+        document.getElementById('visualStyleContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-style-id]');
+          if (!btn) return;
+          state.visualStyle = btn.dataset.styleId;
+          renderVisualStyles();
+          executeDiscovery(true);
+        });
+
+        // 02. Genre
+        document.getElementById('genreContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-genre-id]');
+          if (!btn) return;
+          const gid = Number(btn.dataset.genreId);
+          if (state.selectedGenres.includes(gid)) {
+            state.selectedGenres = state.selectedGenres.filter((id) => id !== gid);
+          } else {
+            state.selectedGenres.push(gid);
+          }
+          btn.classList.toggle('active');
+          executeDiscovery(true);
+        });
+
+        // 03. Moods, Tropes & Story Themes
+        document.getElementById('moodCategoryTabs').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-mood-cat]');
+          if (!btn) return;
+          state.moodCategory = btn.dataset.moodCat;
+          document.querySelectorAll('#moodCategoryTabs button').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderMoodsAndTropes();
+        });
+
+        document.getElementById('moodsTropesContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-mood-id]');
+          if (!btn) return;
+          const mid = btn.dataset.moodId;
+          if (state.selectedMoods.includes(mid)) {
+            state.selectedMoods = state.selectedMoods.filter((id) => id !== mid);
+          } else {
+            state.selectedMoods.push(mid);
+          }
+          renderMoodsAndTropes();
+          executeDiscovery(true);
+        });
+
+        document.getElementById('selectedCustomKeywordsChips').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-remove-custom-kw]');
+          if (!btn) return;
+          const id = Number(btn.dataset.removeCustomKw);
+          state.customKeywords = state.customKeywords.filter((k) => k.id !== id);
+          renderMoodsAndTropes();
+          executeDiscovery(true);
+        });
+
+        // Custom Keyword Autocomplete (/search/keyword)
+        const kwInput = document.getElementById('customKeywordSearchInput');
+        const kwDropdown = document.getElementById('customKeywordDropdown');
+        const debouncedKwSearch = debounce(async () => {
+          const q = kwInput.value.trim();
+          if (q.length < 2) {
+            kwDropdown.classList.add('hidden');
+            return;
+          }
+          try {
+            const data = await tmdbFetch('/search/keyword', { query: q });
+            const results = (data.results || []).slice(0, 7);
+            if (results.length === 0) {
+              kwDropdown.classList.add('hidden');
+              return;
+            }
+            kwDropdown.innerHTML = results
+              .map(
+                (kw) => `
+                <button
+                  type="button"
+                  data-kw-id="${kw.id}"
+                  data-kw-name="${escapeHTML(kw.name)}"
+                  class="w-full text-left px-3 py-2 text-xs border-b last:border-b-0 hover:opacity-85 flex items-center justify-between"
+                  style="border-color: var(--border-subtle); color: var(--text-primary);"
+                >
+                  <span>🏷️ ${escapeHTML(kw.name)}</span>
+                  <span class="text-[10px]" style="color: var(--accent);">+ Add</span>
+                </button>
+              `
+              )
+              .join('');
+            kwDropdown.classList.remove('hidden');
+          } catch (err) {
+            kwDropdown.classList.add('hidden');
+          }
+        }, 300);
+
+        kwInput.addEventListener('input', debouncedKwSearch);
+        kwDropdown.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-kw-id]');
+          if (!btn) return;
+          const kw = { id: Number(btn.dataset.kwId), name: btn.dataset.kwName };
+          if (!state.customKeywords.some((k) => k.id === kw.id)) {
+            state.customKeywords.push(kw);
+            renderMoodsAndTropes();
+            executeDiscovery(true);
+          }
+          kwInput.value = '';
+          kwDropdown.classList.add('hidden');
+        });
+
+        // High-Contrast ANY (OR) / ALL (AND) Toggles
+        document.querySelectorAll('.logic-toggle').forEach((toggle) => {
+          toggle.addEventListener('click', (e) => {
+            const btn = e.target.closest('button[data-value]');
+            if (!btn) return;
+            const group = toggle.dataset.logicGroup;
+            const val = btn.dataset.value;
+            toggle.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (group === 'genre') state.genreLogic = val;
+            if (group === 'mood') state.moodLogic = val;
+            if (group === 'cast') state.castLogic = val;
+            if (group === 'director') state.directorLogic = val;
+            if (group === 'studio') state.studioLogic = val;
+
+            executeDiscovery(true);
+          });
+        });
+
+        // 04. Min Rating & Original Language
+        const ratingSlider = document.getElementById('minRatingSlider');
+        const ratingReadout = document.getElementById('minRatingReadout');
+        function setRatingUI(val) {
+          state.minRating = Number(val);
+          ratingSlider.value = val;
+          ratingReadout.textContent = state.minRating > 0 ? `★ ${state.minRating.toFixed(1)}+` : '★ Any (0.0+)';
+          document.querySelectorAll('.rating-preset').forEach((b) => {
+            b.classList.toggle('active', Number(b.dataset.rating) === state.minRating);
+          });
+        }
+        ratingSlider.addEventListener('input', () => setRatingUI(ratingSlider.value));
+        ratingSlider.addEventListener('change', () => executeDiscovery(true));
+        document.querySelectorAll('.rating-preset').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            setRatingUI(btn.dataset.rating);
+            executeDiscovery(true);
+          });
+        });
+
+        document.getElementById('minVotesSelect').addEventListener('change', (e) => {
+          state.minVotes = Number(e.target.value);
+          executeDiscovery(true);
+        });
+
+        const langInput = document.getElementById('languageSearchInput');
+        const langDropdown = document.getElementById('languageDropdownList');
+        const clearLangBtn = document.getElementById('clearLanguageBtn');
+
+        langInput.addEventListener('focus', () => {
+          renderLanguageDropdown(langInput.value);
+          langDropdown.classList.remove('hidden');
+        });
+        langInput.addEventListener('input', () => {
+          renderLanguageDropdown(langInput.value);
+          langDropdown.classList.remove('hidden');
+        });
+        langDropdown.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-lang-code]');
+          if (!btn) return;
+          state.language = btn.dataset.langCode;
+          langInput.value = state.language ? btn.dataset.langName : '';
+          clearLangBtn.classList.toggle('hidden', !state.language);
+          langDropdown.classList.add('hidden');
+          executeDiscovery(true);
+        });
+        clearLangBtn.addEventListener('click', () => {
+          state.language = '';
+          langInput.value = '';
+          clearLangBtn.classList.add('hidden');
+          executeDiscovery(true);
+        });
+
+        // 05. Casts Autocomplete & Quick Picks
+        setupPersonAutocomplete('castSearchInput', 'castAutocompleteDropdown', (person) => {
+          if (!state.selectedCasts.some((c) => c.id === person.id)) {
+            state.selectedCasts.push(person);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+          }
+        });
+
+        document.getElementById('castQuickPicksContainer').addEventListener('click', async (e) => {
+          const btn = e.target.closest('[data-quick-cast]');
+          if (!btn) return;
+          const name = btn.dataset.quickCast;
+          const idx = state.selectedCasts.findIndex((c) => c.name.toLowerCase() === name.toLowerCase());
+          if (idx >= 0) {
+            state.selectedCasts.splice(idx, 1);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+            return;
+          }
+          const person = await resolvePersonByName(name);
+          if (person) {
+            state.selectedCasts.push(person);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+          }
+        });
+
+        document.getElementById('selectedCastsChips').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-remove-cast]');
+          if (!btn) return;
+          const id = Number(btn.dataset.removeCast);
+          state.selectedCasts = state.selectedCasts.filter((c) => c.id !== id);
+          renderEntityChipsAndQuickPicks();
+          executeDiscovery(true);
+        });
+
+        // 06. Directors Autocomplete & Quick Picks
+        setupPersonAutocomplete('directorSearchInput', 'directorAutocompleteDropdown', (person) => {
+          if (!state.selectedDirectors.some((d) => d.id === person.id)) {
+            state.selectedDirectors.push(person);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+          }
+        });
+
+        document.getElementById('directorQuickPicksContainer').addEventListener('click', async (e) => {
+          const btn = e.target.closest('[data-quick-director]');
+          if (!btn) return;
+          const name = btn.dataset.quickDirector;
+          const idx = state.selectedDirectors.findIndex((d) => d.name.toLowerCase() === name.toLowerCase());
+          if (idx >= 0) {
+            state.selectedDirectors.splice(idx, 1);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+            return;
+          }
+          const person = await resolvePersonByName(name);
+          if (person) {
+            state.selectedDirectors.push(person);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+          }
+        });
+
+        document.getElementById('selectedDirectorsChips').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-remove-director]');
+          if (!btn) return;
+          const id = Number(btn.dataset.removeDirector);
+          state.selectedDirectors = state.selectedDirectors.filter((d) => d.id !== id);
+          renderEntityChipsAndQuickPicks();
+          executeDiscovery(true);
+        });
+
+        // 07. Studios & Networks Autocomplete & Quick Picks
+        setupStudioAutocomplete();
+
+        document.getElementById('studioQuickPicksContainer').addEventListener('click', async (e) => {
+          const btn = e.target.closest('[data-quick-studio]');
+          if (!btn) return;
+          const name = btn.dataset.quickStudio;
+          const idx = state.selectedStudios.findIndex((s) => s.name.toLowerCase() === name.toLowerCase());
+          if (idx >= 0) {
+            state.selectedStudios.splice(idx, 1);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+            return;
+          }
+          const preset = FAMOUS_STUDIO_PICKS.find((s) => s.name.toLowerCase() === name.toLowerCase());
+          if (preset) {
+            state.selectedStudios.push({ ...preset });
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+          } else {
+            const resolved = await resolveCompanyByName(name);
+            if (resolved) {
+              state.selectedStudios.push(resolved);
+              renderEntityChipsAndQuickPicks();
+              executeDiscovery(true);
+            }
+          }
+        });
+
+        document.getElementById('selectedStudiosChips').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-remove-studio]');
+          if (!btn) return;
+          const name = btn.dataset.removeStudio;
+          state.selectedStudios = state.selectedStudios.filter((s) => s.name !== name);
+          renderEntityChipsAndQuickPicks();
+          executeDiscovery(true);
+        });
+
+        // 08. Release Era & Year From/To
+        document.getElementById('eraPillsContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-era-id]');
+          if (!btn) return;
+          const era = RELEASE_ERAS.find((item) => item.id === btn.dataset.eraId);
+          if (!era) return;
+          state.era = era.id;
+          state.yearFrom = era.from;
+          state.yearTo = era.to;
+          document.getElementById('yearFromInput').value = era.from;
+          document.getElementById('yearToInput').value = era.to;
+          renderErasAwardsAndMore();
+          executeDiscovery(true);
+        });
+
+        const debouncedYears = debounce(() => {
+          state.era = 'custom';
+          state.yearFrom = document.getElementById('yearFromInput').value;
+          state.yearTo = document.getElementById('yearToInput').value;
+          renderErasAwardsAndMore();
+          executeDiscovery(true);
+        }, 420);
+        document.getElementById('yearFromInput').addEventListener('input', debouncedYears);
+        document.getElementById('yearToInput').addEventListener('input', debouncedYears);
+
+        // 09. Awards
+        document.getElementById('awardsContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-award-id]');
+          if (!btn) return;
+          const id = btn.dataset.awardId;
+          if (state.selectedAwards.includes(id)) {
+            state.selectedAwards = state.selectedAwards.filter((a) => a !== id);
+          } else {
+            state.selectedAwards.push(id);
+          }
+          renderErasAwardsAndMore();
+          executeDiscovery(true);
+        });
+
+        // 10. Runtime & More Filters
+        document.getElementById('runtimePresetsContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-runtime-id]');
+          if (!btn) return;
+          const rt = RUNTIME_PRESETS.find((r) => r.id === btn.dataset.runtimeId);
+          if (!rt) return;
+          state.runtimePreset = rt.id;
+          state.runtimeMin = rt.min;
+          state.runtimeMax = rt.max;
+          document.getElementById('runtimeMinInput').value = rt.min;
+          document.getElementById('runtimeMaxInput').value = rt.max;
+          renderErasAwardsAndMore();
+          executeDiscovery(true);
+        });
+
+        const debouncedRuntime = debounce(() => {
+          state.runtimePreset = 'custom';
+          state.runtimeMin = document.getElementById('runtimeMinInput').value;
+          state.runtimeMax = document.getElementById('runtimeMaxInput').value;
+          renderErasAwardsAndMore();
+          executeDiscovery(true);
+        }, 420);
+        document.getElementById('runtimeMinInput').addEventListener('input', debouncedRuntime);
+        document.getElementById('runtimeMaxInput').addEventListener('input', debouncedRuntime);
+
+        document.getElementById('watchRegionSelect').addEventListener('change', (e) => {
+          state.watchRegion = e.target.value;
+          if (state.selectedProviders.length > 0) executeDiscovery(true);
+        });
+
+        document.getElementById('streamingProvidersContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-provider-id]');
+          if (!btn) return;
+          const pid = btn.dataset.providerId;
+          if (state.selectedProviders.includes(pid)) {
+            state.selectedProviders = state.selectedProviders.filter((id) => id !== pid);
+          } else {
+            state.selectedProviders.push(pid);
+          }
+          renderErasAwardsAndMore();
+          executeDiscovery(true);
+        });
+
+        document.getElementById('certificationContainer').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-cert-id]');
+          if (!btn) return;
+          state.certification = btn.dataset.certId;
+          renderErasAwardsAndMore();
+          executeDiscovery(true);
+        });
+
+        document.getElementById('sortBySelect').addEventListener('change', (e) => {
+          state.sortBy = e.target.value;
+          executeDiscovery(true);
+        });
+
+        // Load More
+        document.getElementById('loadMoreBtn').addEventListener('click', () => {
+          if (!state.isLoading && state.page < state.totalPages) {
+            state.page += 1;
+            executeDiscovery(false);
+          }
+        });
+
+        // Results Grid Card Clicks (Watchlist, Trailer, or Full Detail)
+        document.getElementById('resultsGrid').addEventListener('click', (e) => {
+          const watchBtn = e.target.closest('[data-toggle-watchlist]');
+          if (watchBtn) {
+            e.stopPropagation();
+            const [endpoint, idStr] = watchBtn.dataset.toggleWatchlist.split(':');
+            const item = state.results.find((r) => r.endpoint === endpoint && Number(r.id) === Number(idStr));
+            if (item) toggleWatchlistItem(item);
+            return;
+          }
+
+          const trailerBtn = e.target.closest('[data-open-trailer]');
+          if (trailerBtn) {
+            e.stopPropagation();
+            const [endpoint, idStr] = trailerBtn.dataset.openTrailer.split(':');
+            openDetailModal(endpoint, idStr, true);
+            return;
+          }
+
+          const card = e.target.closest('[data-open-detail]');
+          if (card) {
+            const [endpoint, idStr] = card.dataset.openDetail.split(':');
+            openDetailModal(endpoint, idStr, false);
+          }
+        });
+
+        // Detail Modal Clicks
+        document.getElementById('detailModal').addEventListener('click', (e) => {
+          if (e.target.id === 'detailModal' || e.target.closest('#closeDetailModalBtn')) {
+            closeDetailModal();
+            return;
+          }
+
+          if (e.target.closest('#modalWatchlistToggleBtn') && window.__currentDetailItem) {
+            toggleWatchlistItem(window.__currentDetailItem);
+            const saved = watchlist.some(
+              (w) => w.endpoint === window.__currentDetailItem.endpoint && Number(w.id) === Number(window.__currentDetailItem.id)
+            );
+            e.target.closest('#modalWatchlistToggleBtn').innerHTML = `<span>${
+              saved ? '✓ Saved in Would Watch That List' : '+ Add to Would Watch That List'
+            }</span>`;
+            return;
+          }
+
+          const recBtn = e.target.closest('[data-open-rec]');
+          if (recBtn) {
+            const [endpoint, idStr] = recBtn.dataset.openRec.split(':');
+            openDetailModal(endpoint, idStr, false);
+            return;
+          }
+
+          const castBtn = e.target.closest('[data-filter-cast-id]');
+          if (castBtn) {
+            const person = {
+              id: Number(castBtn.dataset.filterCastId),
+              name: castBtn.dataset.filterCastName,
+              profile_path: castBtn.dataset.filterCastPhoto || null
+            };
+            if (!state.selectedCasts.some((c) => c.id === person.id)) {
+              state.selectedCasts.push(person);
+            }
+            state.searchQuery = '';
+            heroInput.value = '';
+            clearHeroBtn.classList.add('hidden');
+            renderEntityChipsAndQuickPicks();
+            closeDetailModal();
+            executeDiscovery(true);
+            showToast(`Filtering by Cast: ${person.name}`);
+            return;
+          }
+
+          const dirBtn = e.target.closest('[data-filter-director-id]');
+          if (dirBtn) {
+            const person = {
+              id: Number(dirBtn.dataset.filterDirectorId),
+              name: dirBtn.dataset.filterDirectorName,
+              profile_path: null
+            };
+            if (!state.selectedDirectors.some((d) => d.id === person.id)) {
+              state.selectedDirectors.push(person);
+            }
+            state.searchQuery = '';
+            heroInput.value = '';
+            clearHeroBtn.classList.add('hidden');
+            renderEntityChipsAndQuickPicks();
+            closeDetailModal();
+            executeDiscovery(true);
+            showToast(`Filtering by Director: ${person.name}`);
+          }
+        });
+
+        // Settings Modal
+        const settingsModal = document.getElementById('settingsModal');
+        document.getElementById('openSettingsBtn').addEventListener('click', () => {
+          renderSettingsModalOptions();
+          settingsModal.classList.remove('hidden');
+        });
+        document.getElementById('closeSettingsModalBtn').addEventListener('click', () => settingsModal.classList.add('hidden'));
+
+        settingsModal.addEventListener('click', (e) => {
+          if (e.target === settingsModal) {
+            settingsModal.classList.add('hidden');
+            return;
+          }
+
+          const themeBtn = e.target.closest('[data-select-theme]');
+          if (themeBtn) {
+            prefs.theme = themeBtn.dataset.selectTheme;
+            applyPreferences();
+            renderSettingsModalOptions();
+            return;
+          }
+
+          const accentBtn = e.target.closest('[data-select-accent]');
+          if (accentBtn) {
+            prefs.accent = accentBtn.dataset.selectAccent;
+            applyPreferences();
+            renderSettingsModalOptions();
+            renderResults();
+            return;
+          }
+
+          const layoutBtn = e.target.closest('[data-select-layout]');
+          if (layoutBtn) {
+            prefs.layout = layoutBtn.dataset.selectLayout;
+            applyPreferences();
+            renderSettingsModalOptions();
+            renderResults();
+            return;
+          }
+
+          const fontBtn = e.target.closest('[data-select-font]');
+          if (fontBtn) {
+            prefs.font = fontBtn.dataset.selectFont;
+            applyPreferences();
+            renderSettingsModalOptions();
+          }
+        });
+
+        document.getElementById('immersiveGlowToggle').addEventListener('change', (e) => {
+          prefs.immersiveGlow = e.target.checked;
+          applyPreferences();
+        });
+
+        document.getElementById('saveApiKeyBtn').addEventListener('click', () => {
+          const val = document.getElementById('customApiKeyInput').value.trim();
+          if (val.length < 10) {
+            showToast('Please enter a valid TMDB v3 API key');
+            return;
+          }
+          localStorage.setItem(STORAGE_KEYS.CUSTOM_KEY, val);
+          document.getElementById('customApiKeyInput').value = '';
+          renderSettingsModalOptions();
+          showToast('Custom TMDB API key saved');
+          executeDiscovery(true);
+        });
+
+        document.getElementById('revertApiKeyBtn').addEventListener('click', () => {
+          localStorage.removeItem(STORAGE_KEYS.CUSTOM_KEY);
+          document.getElementById('customApiKeyInput').value = '';
+          renderSettingsModalOptions();
+          showToast('Restored built-in hidden database key');
+          executeDiscovery(true);
+        });
+
+        document.getElementById('exportDataBtn').addEventListener('click', () => {
+          const payload = { app: 'Would Watch That', exportedAt: new Date().toISOString(), prefs, watchlist };
+          const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'would-watch-that-backup.json';
+          a.click();
+          URL.revokeObjectURL(url);
+          showToast('JSON backup exported');
+        });
+
+        document.getElementById('importDataInput').addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const parsed = JSON.parse(String(reader.result));
+              if (parsed.prefs) {
+                prefs = { ...defaultPrefs, ...parsed.prefs };
+                applyPreferences();
+                renderSettingsModalOptions();
+              }
+              if (Array.isArray(parsed.watchlist)) {
+                watchlist = parsed.watchlist;
+                saveJSON(STORAGE_KEYS.WATCHLIST, watchlist);
+                updateWatchlistUI();
+                renderResults();
+              }
+              showToast('Backup restored successfully');
+            } catch (err) {
+              showToast('Invalid JSON backup file');
+            }
+          };
+          reader.readAsText(file);
+        });
+
+        document.getElementById('clearCacheBtn').addEventListener('click', () => {
+          cacheStore = { keywords: {}, persons: {}, companies: {}, movieGenres: null, tvGenres: null };
+          saveJSON(STORAGE_KEYS.CACHE, cacheStore);
+          renderSettingsModalOptions();
+          loadGenresForCurrentMedium();
+          showToast('Local metadata cache cleared');
+        });
+
+        // Watchlist Drawer
+        const watchlistOverlay = document.getElementById('watchlistDrawerOverlay');
+        document.getElementById('openWatchlistBtn').addEventListener('click', () => {
+          updateWatchlistUI();
+          watchlistOverlay.classList.remove('hidden');
+        });
+        document.getElementById('closeWatchlistBtn').addEventListener('click', () => watchlistOverlay.classList.add('hidden'));
+
+        document.getElementById('watchlistFilterTabs').addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-wl-filter]');
+          if (!btn) return;
+          state.watchlistTab = btn.dataset.wlFilter;
+          document.querySelectorAll('#watchlistFilterTabs button').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          updateWatchlistUI();
+        });
+
+        watchlistOverlay.addEventListener('click', (e) => {
+          if (e.target === watchlistOverlay) {
+            watchlistOverlay.classList.add('hidden');
+            return;
+          }
+          const remBtn = e.target.closest('[data-remove-watchlist]');
+          if (remBtn) {
+            const [endpoint, idStr] = remBtn.dataset.removeWatchlist.split(':');
+            watchlist = watchlist.filter((w) => !(w.endpoint === endpoint && Number(w.id) === Number(idStr)));
+            saveJSON(STORAGE_KEYS.WATCHLIST, watchlist);
+            updateWatchlistUI();
+            renderResults();
+            return;
+          }
+          const openCard = e.target.closest('[data-open-detail]');
+          if (openCard) {
+            const [endpoint, idStr] = openCard.dataset.openDetail.split(':');
+            watchlistOverlay.classList.add('hidden');
+            openDetailModal(endpoint, idStr, false);
+          }
+        });
+
+        document.getElementById('copyWatchlistTextBtn').addEventListener('click', () => {
+          if (watchlist.length === 0) {
+            showToast('Watchlist is empty');
+            return;
+          }
+          const text =
+            'Would Watch That — Curated List:\n\n' +
+            watchlist.map((w, i) => `${i + 1}. ${w.title} (${w.year}) [${w.formatLabel}] — ★ ${w.rating}`).join('\n');
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast('Watchlist copied to clipboard');
+        });
+
+        document.getElementById('clearWatchlistBtn').addEventListener('click', () => {
+          watchlist = [];
+          saveJSON(STORAGE_KEYS.WATCHLIST, watchlist);
+          updateWatchlistUI();
+          renderResults();
+          showToast('Watchlist cleared');
+        });
+
+        // Close dropdowns on outside click & modals on Escape
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('#customKeywordSearchInput') && !e.target.closest('#customKeywordDropdown')) {
+            kwDropdown.classList.add('hidden');
+          }
+          if (!e.target.closest('#languageSearchInput') && !e.target.closest('#languageDropdownList')) {
+            langDropdown.classList.add('hidden');
+          }
+          if (!e.target.closest('#castSearchInput') && !e.target.closest('#castAutocompleteDropdown')) {
+            document.getElementById('castAutocompleteDropdown').classList.add('hidden');
+          }
+          if (!e.target.closest('#directorSearchInput') && !e.target.closest('#directorAutocompleteDropdown')) {
+            document.getElementById('directorAutocompleteDropdown').classList.add('hidden');
+          }
+          if (!e.target.closest('#studioSearchInput') && !e.target.closest('#studioAutocompleteDropdown')) {
+            document.getElementById('studioAutocompleteDropdown').classList.add('hidden');
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeDetailModal();
+            settingsModal.classList.add('hidden');
+            watchlistOverlay.classList.add('hidden');
+          }
+        });
+      }
+
+      /* Person Autocomplete Helper (Cast & Directors) */
+      function setupPersonAutocomplete(inputId, dropdownId, onSelect) {
+        const input = document.getElementById(inputId);
+        const dropdown = document.getElementById(dropdownId);
+
+        const doSearch = debounce(async () => {
+          const q = input.value.trim();
+          if (q.length < 2) {
+            dropdown.classList.add('hidden');
+            return;
+          }
+          try {
+            const data = await tmdbFetch('/search/person', { query: q });
+            const people = (data.results || []).slice(0, 7);
+            if (people.length === 0) {
+              dropdown.classList.add('hidden');
+              return;
+            }
+            dropdown.innerHTML = people
+              .map((p) => {
+                const avatar = p.profile_path
+                  ? `${IMG_HEADSHOT}${p.profile_path}`
+                  : `https://placehold.co/80x80/1E293B/D4AF37?text=${encodeURIComponent(p.name.slice(0, 2))}`;
+                return `
+                  <button
+                    type="button"
+                    data-person-id="${p.id}"
+                    data-person-name="${escapeHTML(p.name)}"
+                    data-person-photo="${p.profile_path || ''}"
+                    class="w-full px-3 py-2 flex items-center gap-2.5 text-left border-b last:border-b-0 hover:opacity-85"
+                    style="border-color: var(--border-subtle);"
+                  >
+                    <img src="${avatar}" alt="${escapeHTML(p.name)}" class="w-8 h-8 rounded-full object-cover shrink-0" />
+                    <div class="min-w-0">
+                      <p class="text-xs font-bold truncate" style="color: var(--text-primary);">${escapeHTML(p.name)}</p>
+                      <p class="text-[10px] truncate" style="color: var(--text-muted);">${escapeHTML(p.known_for_department || 'Talent')}</p>
+                    </div>
+                  </button>
+                `;
+              })
+              .join('');
+            dropdown.classList.remove('hidden');
+          } catch (err) {
+            dropdown.classList.add('hidden');
+          }
+        }, 300);
+
+        input.addEventListener('input', doSearch);
+        dropdown.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-person-id]');
+          if (!btn) return;
+          onSelect({
+            id: Number(btn.dataset.personId),
+            name: btn.dataset.personName,
+            profile_path: btn.dataset.personPhoto || null
+          });
+          input.value = '';
+          dropdown.classList.add('hidden');
+        });
+      }
+
+      /* Studio & Network Autocomplete Helper */
+      function setupStudioAutocomplete() {
+        const input = document.getElementById('studioSearchInput');
+        const dropdown = document.getElementById('studioAutocompleteDropdown');
+
+        const doSearch = debounce(async () => {
+          const q = input.value.trim();
+          if (q.length < 2) {
+            dropdown.classList.add('hidden');
+            return;
+          }
+          try {
+            const presetMatches = FAMOUS_STUDIO_PICKS.filter((s) =>
+              s.name.toLowerCase().includes(q.toLowerCase())
+            );
+            const data = await tmdbFetch('/search/company', { query: q });
+            const apiCompanies = (data.results || []).slice(0, 6).map((c) => ({
+              id: c.id,
+              name: c.name,
+              companyId: c.id,
+              networkId: null,
+              logo_path: c.logo_path || null
+            }));
+
+            const combined = [...presetMatches];
+            apiCompanies.forEach((ac) => {
+              if (!combined.some((m) => m.name.toLowerCase() === ac.name.toLowerCase())) {
+                combined.push(ac);
+              }
+            });
+
+            if (combined.length === 0) {
+              dropdown.classList.add('hidden');
+              return;
+            }
+
+            dropdown.innerHTML = combined
+              .slice(0, 7)
+              .map(
+                (st) => `
+                <button
+                  type="button"
+                  data-studio-name="${escapeHTML(st.name)}"
+                  data-studio-company="${st.companyId || ''}"
+                  data-studio-network="${st.networkId || ''}"
+                  class="w-full px-3 py-2 flex items-center justify-between text-left border-b last:border-b-0 hover:opacity-85"
+                  style="border-color: var(--border-subtle);"
+                >
+                  <span class="text-xs font-bold truncate" style="color: var(--text-primary);">${escapeHTML(st.name)}</span>
+                  <span class="text-[10px] uppercase font-semibold shrink-0" style="color: var(--accent);">
+                    ${st.networkId ? 'Studio & Network' : 'Studio'}
+                  </span>
+                </button>
+              `
+              )
+              .join('');
+            dropdown.classList.remove('hidden');
+          } catch (err) {
+            dropdown.classList.add('hidden');
+          }
+        }, 300);
+
+        input.addEventListener('input', doSearch);
+        dropdown.addEventListener('click', (e) => {
+          const btn = e.target.closest('[data-studio-name]');
+          if (!btn) return;
+          const studio = {
+            id: Number(btn.dataset.studioCompany || btn.dataset.studioNetwork),
+            name: btn.dataset.studioName,
+            companyId: btn.dataset.studioCompany ? Number(btn.dataset.studioCompany) : null,
+            networkId: btn.dataset.studioNetwork ? Number(btn.dataset.studioNetwork) : null
+          };
+          if (!state.selectedStudios.some((s) => s.name.toLowerCase() === studio.name.toLowerCase())) {
+            state.selectedStudios.push(studio);
+            renderEntityChipsAndQuickPicks();
+            executeDiscovery(true);
+          }
+          input.value = '';
+          dropdown.classList.add('hidden');
+        });
+      }
+
+      /* Reset All Filters */
+      async function resetAllFilters() {
+        state.searchQuery = '';
+        state.medium = 'movie';
+        state.visualStyle = 'all';
+        state.selectedGenres = [];
+        state.genreLogic = 'OR';
+        state.moodCategory = 'all';
+        state.selectedMoods = [];
+        state.customKeywords = [];
+        state.moodLogic = 'OR';
+        state.minRating = 0;
+        state.minVotes = 250;
+        state.language = '';
+        state.selectedCasts = [];
+        state.castLogic = 'OR';
+        state.selectedDirectors = [];
+        state.directorLogic = 'OR';
+        state.selectedStudios = [];
+        state.studioLogic = 'OR';
+        state.era = 'all';
+        state.yearFrom = '';
+        state.yearTo = '';
+        state.selectedAwards = [];
+        state.runtimePreset = 'any';
+        state.runtimeMin = '';
+        state.runtimeMax = '';
+        state.selectedProviders = [];
+        state.certification = '';
+        state.sortBy = 'popularity.desc';
+
+        document.getElementById('heroSearchInput').value = '';
+        document.getElementById('clearHeroSearchBtn').classList.add('hidden');
+        document.getElementById('minRatingSlider').value = 0;
+        document.getElementById('minRatingReadout').textContent = '★ Any (0.0+)';
+        document.querySelectorAll('.rating-preset').forEach((b) => b.classList.toggle('active', b.dataset.rating === '0'));
+        document.getElementById('minVotesSelect').value = '250';
+        document.getElementById('languageSearchInput').value = '';
+        document.getElementById('clearLanguageBtn').classList.add('hidden');
+        document.getElementById('yearFromInput').value = '';
+        document.getElementById('yearToInput').value = '';
+        document.getElementById('runtimeMinInput').value = '';
+        document.getElementById('runtimeMaxInput').value = '';
+        document.getElementById('sortBySelect').value = 'popularity.desc';
+
+        document.querySelectorAll('#moodCategoryTabs button').forEach((b) => {
+          b.classList.toggle('active', b.dataset.moodCat === 'all');
+        });
+        document.querySelectorAll('.logic-toggle').forEach((toggle) => {
+          toggle.querySelectorAll('button').forEach((b) => b.classList.toggle('active', b.dataset.value === 'OR'));
+        });
+
+        renderContentMediums();
+        renderVisualStyles();
+        await loadGenresForCurrentMedium();
+        renderMoodsAndTropes();
+        renderEntityChipsAndQuickPicks();
+        renderErasAwardsAndMore();
+        executeDiscovery(true);
+      }
+
+      /* ------------------------------------------------------------------------
+         13. INITIALIZATION ON WINDOW LOAD
+         ------------------------------------------------------------------------ */
+      window.addEventListener('DOMContentLoaded', async () => {
+        applyPreferences();
+        renderContentMediums();
+        renderVisualStyles();
+        renderMoodsAndTropes();
+        renderLanguageDropdown('');
+        renderEntityChipsAndQuickPicks();
+        renderErasAwardsAndMore();
+        updateWatchlistUI();
+        bindAmbientSpotlightHover();
+        bindEvents();
+
+        await loadGenresForCurrentMedium();
+        await executeDiscovery(true);
+      });
+    })();
+  </script>
+</body>
+</html>
